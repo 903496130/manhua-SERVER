@@ -1,0 +1,76 @@
+/* 整个顶部元素 */
+#title {
+	position: relative;
+	height: 150px;
+	background-image:url('https://api.ixiaowai.cn/api/api.php');
+	background-size:100% auto;
+	background-position: center;
+	transition: height 0.3s;
+	box-shadow: 0px 3px 10px 0px #4c4c4c;
+}
+#title:hover{
+	height: 100vh;
+}
+
+
+/* 上面的导航栏 */
+#head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 50px;
+	background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, .4));
+	box-shadow: 0px 3px 10px 0px #4c4c4c;
+}
+
+
+/* 导航栏中的logo */
+#logo{
+	width: 260px;
+}
+.logo {
+	height: 40px;
+}
+
+/* 导航栏中的搜索框 */
+#search {
+	width: 300px;
+}
+#search_content{
+	max-width: 250px;
+}
+.search_icon {
+	/* 搜索图标 */
+	font-size: 20px;
+	margin-left: 5px;
+	transition: color 0.3s,font-size 0.3s;
+}
+.search_icon:hover{
+	color: #007aff;
+	font-size: 23px;
+}
+/* 导航栏中的用户框 */
+#user {
+	margin-right: 40px;
+	width: 260px;
+}
+.tx {
+	/* 头像 */
+	width: 45px;
+	height: 45px;
+	border-radius: 100px;
+	margin-right: 10px;
+	border: 2px solid #cce2de;
+}
+
+/* 当前位置提示栏 */
+#head_bottom {
+	position: absolute;
+	bottom: 0%;
+	padding-left: 10px;
+	background-color: rgba(0, 0, 0, .2);
+	width: 100%;
+	color: white;
+}
+
+/* 顶部结束 */

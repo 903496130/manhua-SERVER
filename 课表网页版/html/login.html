@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="/static/js/mui.min.js"></script>
+		<link href="/static/css/mui.min.css" rel="stylesheet" />
+		<script src="/static/js/jquery-3.4.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/csshake.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+
+		<style type="text/css">
+			body{
+				width: 400px!important;
+				margin: auto;
+				display: block;
+				border: 1px solid black;
+			}
+		</style>
+		<script type="text/javascript">
+			alert("测试账号123,密码123");
+		</script>
+	</head>
+
+	<body>
+
+		<img src="/static/pic/logo.png" class="shake-slow" id="pic">
+		<span id="hello">大事小情，一盏搞定~</span>
+		<span id="newhello" style="font-size: 5px;">别来无恙~</span>
+		<hr>
+		<form class="mui-input-group" id='main'>
+			<br>
+			<div class="mui-input-row" id='un'>
+				<label>学号</label>
+				<input id='username' type="text" class="mui-input-clear" placeholder="请输入学号">
+			</div>
+			<br>
+			<div class="mui-input-row" id='pw'>
+				<label>密码</label>
+				<input id='password' type="password" class="mui-input-password mui-placeholder" placeholder="请输入教务处密码">
+			</div>
+		</form>
+		<div class="mui-content-padded">
+			<button id='login' class="mui-btn mui-btn-block mui-btn-warning" data-loading-text="登陆中" type="button">登录</button>
+		</div>
+		<div class="mui-button-row">
+			<a id='ys'>隐私条例</a>
+			<span id="shu">
+				　|　
+			</span>
+			<a id='gw'>访问官网</a>
+		</div>
+
+		<h6 id='foot'>Version Beta 0.45</h6>
+
+	</body>
+
+	<script src="/static/js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		
+		$$(document).ready(function() {
+			//处理输入框获取焦点时，让placeholder变色
+			$$("input").hover(function() {
+				$$(this).addClass("invalid");
+				$$('#foot').css('visibility', 'hidden');
+			}, function() {
+				$$(this).removeClass("invalid");
+				$$('#foot').css('visibility', 'visible');
+			});
+			//处理屏幕高度适应
+			$$(window).resize(function() {
+				$$('body').css("height", window.screen.height + "px");
+				console.log(window.screen.height);
+			});
+			
+			//初始化页面中各种元素的尺寸的高度
+			function setSize() {
+				height = window.screen.height;
+				$$('body').css("height", height + "px");
+				$$('#pic').css("height", height * 0.2 + "px");
+			
+			}
+			setSize();
+			
+			
+			//加载新页面
+			function show() {
+				// var mainPage = mui.preload({
+				// 	"id": 'show',
+				// 	"url": 'show.html'
+				// });
+				// mainPage.show();
+				window.location.href = "./show"
+			}
+			
+			
+			//进入新页面的加载动画
+			function init() {
+				//背景颜色变淡
+				$$('.mui-plus').removeClass("xbody");
+				//左移隐私
+				$$('#ys').removeClass("xys");
+				//右移官网
+				$$('#gw').removeClass("xgw");
+				//渐隐登录
+				$$('#login').removeClass("xbutton");
+				//下移竖线
+				$$('#shu').removeClass("xshu");
+				//左移账号框
+				$$('#un').removeClass("xusername");
+				//右移密码框
+				$$('#pw').removeClass("xpassword");
+				//茶杯变大！
+				$$("#pic").attr("class", "shake-slow");
+				$$('#pic').removeClass("xpic");
+				//文字，横线消失
+				$$('hr').removeClass("xbutton");
+				$$('#hello').removeClass("xbutton");
+				//展示新标语
+				$$('#newhello').removeClass("xnewhello");
+			}
+			
+			
+			function loadNewPage() {
+				console.log("开始播放动画");
+				//改变欢迎语
+				output("#newhello", "嗨," + getData().data.name);
+				//背景颜色变淡
+				$$('.mui-plus').addClass("xbody");
+				//隐藏版本
+				$$('#foot').css('visibility', 'hidden');
+				//左移隐私
+				$$('#ys').addClass("xys");
+				//右移官网
+				$$('#gw').addClass("xgw");
+				//渐隐登录
+				$$('#login').addClass("xbutton");
+				//下移竖线
+				$$('#shu').addClass("xshu");
+				//左移账号框
+				$$('#un').addClass("xusername");
+				//右移密码框
+				$$('#pw').addClass("xpassword");
+				//茶杯变大！
+				$$("#pic").attr("class", "shake-slow");
+				$$('#pic').addClass("xpic");
+				//文字，横线消失
+				$$('hr').addClass("xbutton");
+				$$('#hello').addClass("xbutton");
+				//展示新标语
+				$$('#newhello').addClass("xnewhello");
+			
+				setTimeout(function() {
+					show();
+					
+				}, 5000);
+			
+			
+			}
+			
+			//添加登录按钮点击事件
+			mui(document.body).on('tap', '.mui-btn', function(e) {
+			
+				var button = mui(this);
+				button.button('loading');
+				var username = mui('#username')[0].value;
+				var password = mui('#password')[0].value;
+			
+				//登陆时茶杯颤动
+				$$("#pic").attr("class", "preview-item big transp shake-slow shake-constant shake-constant--hover");
+			
+				//恢复版本显示
+				$$("input").trigger("mouseout");
+			
+				//触发事件收起输入法 
+				$$("input").trigger("blur");
+			
+				login(username, password, function(e) {
+					if (e) {
+						if (e != '数据请求成功！') {
+							mui.toast(e, {
+								duration: 'short'
+							});
+							setTimeout(function() {
+								$$("#pic").attr("class", "shake-hard");
+							}, 2000)
+						} else {
+							localStorage.setItem('$$autolog', '1');
+							loadNewPage();
+						}
+			
+						button.button('reset');
+					}
+				})
+			});
+			
+			//隐私条例
+			mui(document.body).on('click', '#ys', function(e) {
+				string = "1.账号密码仅用来获取课程数据，服务器并不会记录密码。\n2.……\n3.……\n剩下的日后再说~~~"
+				mui.alert(string, "隐私条例", "Get √", null, 'div')
+			});
+			
+			//访问官网
+			mui(document.body).on('tap', '#gw', function(e) {
+				string = "http://www.chenshimei.club"
+				//mui.alert(string,"官网","Get √",null,'div')
+				plus.runtime.openURL(string, null);
+			});
+		});
+
+	</script>
+
+</html>

@@ -1,0 +1,70 @@
+$def with(content)
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+		<link rel="stylesheet" type="text/css" href="/static/pc/css/bootstrap.min.css" />
+		<script src="/static/pc/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/pc/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/pc/js/main.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="/static/pc/css/title.css" />
+		<link rel="stylesheet" type="text/css" href="/static/pc/css/yeling.css" />
+		<link rel="stylesheet" type="text/css" href="/static/pc/css/footer.css" />
+
+
+		<style type="text/css">
+			* {
+				font-family: "Source Han Sans CN";
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="title">
+			<div id="head">
+				<div id='logo' class="line center">
+					<img src="/static/pic/logo.png" class="logo">
+					你爱的，在这里~
+				</div>
+
+				<div id="search" class="line center">
+					<input id='search_content' type="text" class="form-control" placeholder="漫画搜索">
+					<span onclick='search();' class="glyphicon glyphicon-search search_icon"></span>
+				</div>
+
+				<div id="user">
+					<div class="pull-right">
+						<img src="/static/pic/tx.jpg" class="tx">
+						<a href="">
+							<span class="space">登录</span>
+						</a>
+						/
+						<a href="">
+							<span class="space">注册</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div id="head_bottom">
+				>当前位置：首页
+			</div>
+		</div>
+		<!--  -->
+
+		$:content
+
+		<div id="footer">
+
+			叶灵漫画 - @Copyright YeLing
+			<br>
+			本站资源来自网络，仅供展示之用。如果侵犯了您的权益，请联系站长删除相关资源。
+			<br>
+			xxxxxxxxx@qq.com
+		</div>
+
+	</body>
+</html>
+<script src="/static/assets/autoload.js?v=1.4.2"></script>

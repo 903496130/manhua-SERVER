@@ -1,0 +1,372 @@
+$def with (id,cid)
+$code:
+	#检查是否可视
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+	sql = 'select * from list where visible=1 and mhid={}'.format(id)
+	ch.execute(sql)
+	tag = 1
+	for i in ch:
+		tag = 0
+		break
+	if tag:
+		return '<script>window.location.href="/error"</script>'
+
+	#获取漫画类型
+	sql = 'select position from list where mhid={};'.format(id)
+	ch.execute(sql)
+	position = ch.fetchone()[0]
+
+	#添加以读
+	sql = "update chapter set readed=1 where mhid={} and zjid={};".format(id,cid)
+	ch.execute(sql)
+	db.commit()
+
+	#检查是否为最后一章
+	sql = 'select name from chapter where mhid={} and zjid={}+1;'.format(id,cid)
+	ch.execute(sql)
+	tag = 1
+	for i in ch:
+		tag = 0
+		title = i[0]
+		isend = 0
+	if tag:
+		isend = 1
+
+	if cid == '0':
+		ishead = 1
+	else:
+		ishead = 0
+
+	#查询章节标题
+	sql = 'select name from chapter where mhid={} and zjid={}'.format(id,cid)
+	ch.execute(sql)
+	tag = 1
+	for i in ch:
+		tag = 0
+		title = i[0]
+	if tag:
+		return '<script>window.location.href="/error"</script>'
+
+	#查询图片url
+	sql = 'select * from url where mhid={} and zjid={} order by tpid;'.format(id,cid)
+	ch.execute(sql)
+	tag = 1
+	if ch.rowcount != 0:
+		tag = 0
+	if tag:
+		return '<script>window.location.href="/error"</script>'
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>$title 在线观看 - 叶灵漫画</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="referrer" content="no-referrer">
+		<script src="/static/mobile/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/mobile/js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/mobile/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="/static/mobile/css/mui.css" />
+		<link rel="stylesheet" type="text/css" href="/static/mobile/css/mui.min.css" />
+		<style type="text/css">
+			body {
+				margin: auto;
+			}
+			@media screen and (min-width: 700px) {
+				body {
+					width: 700px;
+				}
+			}
+
+			.pic {
+				width: 100%;
+				margin: 0px;
+				padding: 0px;
+				margin-bottom: -7px;
+			}
+			.mui-bar {
+				transition: opacity 0.2s;
+			}
+			#footer {
+				text-align: center;
+				background-color: rgba(0, 0, 0, 0.85);
+				color: white;
+				width: 100%;
+				top: 100%;
+				left: 0px;
+				transition: transform 0.2s;
+				z-index: 100;
+			}
+
+			.jump {
+				display: inline-block;
+				position: relative;
+				transform: translateY(-70%);
+			}
+
+			#page {
+				background-color: rgba(0, 0, 0, 0.2);
+				transition: transform 0.2s;
+				color: white;
+				font-size: 9px;
+				display: inline-block;
+				position: fixed;
+				left: 0px;
+				top: 100%;
+				padding: 0px;
+				height: 17px;
+				padding-left: 5px;
+				padding-right: 5px;
+				transform: translateY(-90%);
+			}
+
+			#picarea:before{
+				content: "";
+				position: fixed;
+				background-color: rgba(0,0,0,0);
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+			}
+			#up{
+				position: fixed;
+				z-index: 6;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 20%;
+				background-color: rgba(0, 0, 0, 0);
+			}
+			#down{
+				position: fixed;
+				z-index: 6;
+				top: 75%;
+				left: 0px;
+				width: 100%;
+				height: 25%;
+				background-color: rgba(0, 0, 0, 0);
+			}
+			header > a{
+				color: orange;
+				font-weight: 1000;
+			}
+		</style>
+		<script type="text/javascript">
+			$$(document).ready(function() {
+				//顶部填充
+				var htmlheight = window.screen.availHeight;
+				var barheight = $$(".mui-bar").height();
+				var pagewidth = $$("body").width();
+				var footerheight = $$("#footer").height();
+				var numOfAllPic;
+				$$('#fill').css("height", barheight + 'px');
+				//$$('#footer').css("width", pagewidth + 'px');
+				//获取图片顶部位置
+				var arr = [];
+				pic = $$('.pic');
+				numOfAllPic = pic.length;
+				for (i = 0; i < numOfAllPic; i++) {
+					$$(pic[i]).attr('page', i + 1);
+					arr.push($$(pic[i]).offset().top);
+				}
+
+				//创建自定义事件
+				var myEvent = new CustomEvent('light');
+
+				//触发自定义事件 各个图片自行判断自己是否是当前正在被观看的图片
+				$$('.pic').on('light', function() {
+
+					if (
+						$$(this).offset().top > p && $$(this).offset().top < p + htmlheight * 0.6
+					) {
+						$$('#page').text(
+							$$(this).attr('page') + '/' + numOfAllPic
+						)
+
+					}
+
+				})
+
+				var p = 0,
+					t = 0;
+				//页面上下滚动事件
+				$$(window).scroll(function() {
+					p = $$(this).scrollTop();
+					if (p > barheight * 2) {
+						if (t < p) {
+							//下滚
+							$$('#footer').css('position', "unset");
+							$$('#footer').css('transform', "");
+							$$('#page').css('transform', 'translateY(-90%)');
+							if ($$(window).scrollTop() > $$(".mui-bar").height() * 2) {
+								$$(".mui-bar").css('opacity', 0);
+							}
+							console.log("隐藏");
+
+							$$(".mui-bar").css('opacity', 0);
+						} else {
+							//上滚
+							$$(".mui-bar").css('opacity', 1);
+						}
+						if($$("#footer").offset().top < $$(window).scrollTop() + window.screen.height){
+							$$("#down").css("visibility",'hidden');
+
+						}
+						else{
+							$$("#down").css("visibility",'visible');
+						}
+						setTimeout(function() {
+							t = p;
+						}, 0)
+					}
+
+					$$('.pic').trigger("light");
+				})
+
+				//点击图片显示取消footer
+				$$("#picarea").on('click', function() {
+					status = $$('#footer').css('position');
+					if (status == 'fixed') {
+						//隐藏
+						$$('#footer').css('position', "unset");
+						$$('#footer').css('transform', "");
+						$$('#page').css('transform', 'translateY(-90%)');
+						if ($$(window).scrollTop() > $$(".mui-bar").height() * 2) {
+							$$(".mui-bar").css('opacity', 0);
+						}
+						console.log("隐藏");
+
+					} else {
+						//显示
+						$$('#page').css('transform', 'translateY(' + (footerheight + 17) * -1 + 'px)');
+						$$('#footer').css('position', "fixed");
+						$$('#footer').css('transform', "translateY(-100%)");
+						$$(".mui-bar").css('opacity', 1);
+						console.log("显示");
+					}
+
+				});
+                showTrueImg = function(){
+					arr = $$('.pic')
+					for(i = 0;i < arr.length;i++){
+						url = arr[i].getAttribute("url");
+						var img = new Image();
+						img.setAttribute("num",i);
+						img.onload = function(){
+							arr[this.getAttribute('num')].setAttribute('src',this.src);
+						}
+						img.onerror = function() {
+							arr[this.getAttribute('num')].setAttribute('src','/static/mobile/pic/error.jpg');
+						}
+						img.src = url;
+					}
+				}
+				showTrueImg();
+			});
+		</script>
+		<script>
+			function turn(tag){
+				var mhid = $id;
+				var zjid = $cid;
+				var isend = $isend;
+				var ishead = $ishead;
+				if(tag == 0){
+					if(ishead == 1){
+						alert("这是第一章哦！");
+					}
+					else{
+						window.location.href="/$id/" + (zjid - 1);
+					}
+				}
+				if(tag == 1){
+					if(isend == 1){
+						alert("这已经是最后一章了！");
+					}
+					else{
+						var xx = "/$id/" + (zjid + 1);
+						window.location.href = xx;
+					}
+
+				}
+			}
+
+		</script>
+	</head>
+	<body>
+
+		<header class="mui-bar mui-bar-nav" style="background-color:rgba(0, 0, 0, 0.85);color: white;box-shadow: 0 0 0 red;">
+			$code:
+				if position == 0:
+					back = '/{}'.format(id)
+				else:
+					back = 'javascript:history.go(-1)'
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" href="$back"></a>
+			<h1 class="mui-title" style="color: white;font-family: 微软雅黑;font-weight: 1000;">$title</h1>
+			<a class="mui-icon mui-icon-closeempty mui-pull-right" href="/"></a>
+		</header>
+
+		<div id="fill"></div>
+
+		<div id="page">
+			- / -
+		</div>
+
+		<div id="up" onclick="up()">
+			<script type="text/javascript">
+				function up() {
+					$$('html,body').animate({
+						scrollTop: $$(window).scrollTop() - window.screen.height * 0.6
+					}, 300);
+				}
+			</script>
+		</div>
+		<div id="down" onclick="down();">
+			<script type="text/javascript">
+				function down() {
+					//$$(window).scrollTop($$(window).scrollTop() + window.screen.height * 0.7);
+					//$$(window).animate($$(window).scrollTop() + window.screen.height * 0.7);
+					$$('html,body').animate({
+						scrollTop: $$(window).scrollTop() + window.screen.height * 0.6
+					}, 300);
+				}
+			</script>
+		</div>
+
+
+		<div id="picarea">
+				$for i in ch:
+					$code:
+						url = i[3].replace("99.94201314.net","115.125084.com")
+					<img class="pic" src="/static/pic/loading.gif" url='$url'>
+		</div>
+
+		<div id="footer">
+			<a onclick="turn(0);">
+				<span class='jump' style="margin-right: 10%;">
+					<span class="mui-icon mui-icon-back"></span>
+					上一话
+				</span>
+			</a>
+
+			<span style="display: inline-block;height: 30px;width: 1px;background-color: #b9b9b9;margin: 10px;"></span>
+
+			<a onclick="turn(1);">
+				<span class='jump' style="margin-left: 10%;">
+					下一话
+					<span class="mui-icon mui-icon-forward"></span>
+				</span>
+			</a>
+
+
+			<script type="text/javascript">
+				$$('#range').on('input',function(){
+
+					$$('body').css('width',document.getElementById('range').value + '%');
+				})
+			</script>
+		</div>
+
+	</body>
+</html>

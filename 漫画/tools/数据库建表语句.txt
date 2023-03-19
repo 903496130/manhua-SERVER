@@ -1,0 +1,56 @@
+CREATE TABLE `url` (
+  `mhid` int(11) NOT NULL,
+  `zjid` int(11) NOT NULL,
+  `tpid` int(11) NOT NULL,
+  `url` varchar(300) DEFAULT '../source/default/default.png',
+  PRIMARY KEY (`mhid`,`zjid`,`tpid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `list` (
+  `mhid` int(11) NOT NULL,
+  `author` varchar(30) NOT NULL,
+  `status` varchar(6) NOT NULL,
+  `members` int(11) NOT NULL,
+  `source` varchar(500) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `jianjie` varchar(1000) NOT NULL,
+  position int(11) DEFAULT 0 NOT NULL,
+  visible int(11) DEFAULT 1 NOT NULL,
+  PRIMARY KEY (`mhid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `chapter` (
+  `mhid` int(11) NOT NULL,
+  `zjid` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  url varchar(2000),
+  readed int not null default 0,
+  PRIMARY KEY (`mhid`,`zjid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+创建索引:
+create fulltext index name on list(name) WITH PARSER ngram;
+create index position on list(position);
+create index visible on list(visible);
+create index members on list(members);
+
+sql文件[mysqld]要添加"ngram_token_size=1"设置项。
+
+
+修改最大连接数：
+set GLOBAL max_connections=1000;
+
+show variables like "max_connections";
+
+
+delete from list where position =1;
+
+delete from list where source like '%php%';
+
+delete from list where mhid not in (select mhid from chapter);
+delete from chapter where chapter.mhid not in (select mhid from list);
+delete from url where url.mhid not in (select mhid from list);
+
+

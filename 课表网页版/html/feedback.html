@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="/static/css/mui.min.css" rel="stylesheet" />
+		<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+		<script src="/static/js/mui.min.js"></script>
+		<script src="/static/js/app.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			body{
+				width: 400px!important;
+				margin: auto;
+				display: block;
+				border: 1px solid rgba(0, 0, 0, 0.275);
+				padding: 10px;
+			}
+			header{
+				width: 400px;
+				margin: auto;
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<!-- $$(".mui-bar").css('background-color'); -->
+		<header class="mui-bar mui-bar-nav" style="background-color: white;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="num" class="mui-title">反馈</h1>
+		</header>
+		<br>
+		<br>
+		<br>
+		<p style="font-size: 19px;text-align: center;">后续版本更新：<a href="http://chenshimei.club">http://chenshimei.club/</a><br><br>作者QQ903496130，编程交流。</p>
+		<hr>
+		<br>
+		反馈标题(*):<br><br>
+		<input id="title" type="text" class="mui-input-clear" placeholder="请输入标题(30字内)">
+		<br><br>
+		具体内容(*):<br><br>
+		<textarea id="content" rows="8" placeholder="反馈内容,如bug,改进建议等(300字内)……"></textarea>
+		联系方式:<br><br>
+		<input id='contact' type="text" class="mui-input-clear" placeholder="QQ,Email,WeChat Or More……">
+		<button id='feedback' class="mui-btn mui-btn-block mui-btn-primary" data-loading-text="提交中" type="button">提交</button>
+
+		<script type="text/javascript">
+			mui('body').on('tap', "#feedback", function() {
+				var button = mui(this);
+				button.button('loading');
+				title = mui("#title")[0].value;
+				content = mui("#content")[0].value;
+				contact = mui("#contact")[0].value;
+				upload(title, content, contact, function(e) {
+					mui.alert(e, "反馈结果", "了解", null, 'div');
+					button.button('reset');
+				});
+			});
+		</script>
+	</body>
+</html>

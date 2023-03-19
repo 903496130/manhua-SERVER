@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="/static/mobile/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/mobile/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/mobile/js/search.js"></script>
+
+		<!-- <link rel="stylesheet" type="text/css" href="../static/mobile/css/mui.min.css" /> -->
+		<title>叶灵漫画 - 搜索</title>
+		<style type="text/css">
+			@font-face {
+				font-family: 'sans';
+				src: url("/static/mobile/fonts/sans.otf");
+			}
+			a{
+				color: black;
+				text-decoration: none;
+			}
+
+			body {
+				text-align: center;
+				background-color: rgb(247, 247, 247);
+
+			}
+
+			#container{
+				margin: auto;
+				border: rgb(232, 232, 232) solid 3px;
+				border-radius: 10px;
+				width: 80%;
+				background-color: white;
+			}
+
+			#input {
+				display: flex;
+				height: 2.5rem;
+				flex-wrap: nowrap;
+				justify-content: center;
+				align-items: center;
+			}
+
+			#keyword {
+				width: 100%;
+				height: 80%;
+				border: 0;
+				outline: none;
+				margin-left: 10px;
+				font-size: 1.1rem;
+				font-family: "sans";
+				text-align: center;
+			}
+			#search1 {
+				height: 80%;
+				margin-right: 5px;
+			}
+			#search1:hover {
+				content: url(./static/mobile/pic/search_2.png);
+			}
+
+			.top{
+				border-top: rgb(232, 232, 232) solid 3px;
+			}
+
+			.tip{
+				width: 100%;
+				display: block;
+				margin-bottom: 3px;
+				font-size: 1rem;
+			}
+			.tip:hover{
+				background-color: #e6dede;
+			}
+			#logo{
+				width: 80%;
+				margin: auto;
+				margin-top: 100px;
+				margin-bottom: 20px;
+				max-width: 20rem;
+			}
+		</style>
+
+	</head>
+	<body>
+		<img id="logo" src="/static/pic/logo.png" onclick="window.location.href='/'">
+		<br>
+
+		<div id="container">
+			<div id="input">
+				<input id="keyword" placeholder="百度两下,你才知道" onkeydown="calAge();" value="" />
+				<img src="/static/pic/search_1.png" id='search1'>
+			</div>
+			<div id='tips' style="display: none;" class="top">
+
+			</div>
+
+		</div>
+		<script>
+			$$("#search1").on('tap',function(){
+				window.location.href = '/search?name=' + $$("#keyword").val();
+			});
+		</script>
+
+	</body>
+</html>

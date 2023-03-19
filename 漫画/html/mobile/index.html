@@ -1,0 +1,169 @@
+$code:
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+	sql = 'select type from list group by type;'
+	ch.execute(sql)
+	type = ch.fetchall()
+
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>叶灵漫画 - 首页 - 鬼灭之刃 进击的巨人 火影忍者 死神 在线观看</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="referrer" content="no-referrer">
+		<script src="/static/mobile/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/mobile/js/main.js"></script>
+		<script src="/static/mobile/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<link rel="stylesheet" type="text/css" href="/static/mobile/css/mui.min.css" />
+		<link rel="stylesheet" media="(max-width:500px)" type="text/css" href="/static/mobile/css/main.css" />
+		<link rel="stylesheet" media="(min-width:500px)" type="text/css" href="/static/mobile/css/main_pc.css" />
+
+		<style>
+			#content{
+				margin: 5px;
+				background-color: white;
+				border: rgb(232, 232, 232) solid 3px;
+				border-radius: 10px;
+
+			}
+			.type{
+				width: 100%;
+				height: 40px;
+				line-height: 30px;
+				text-align: center;
+				color: deepskyblue;
+				transition: background-color 0.5s,color 0.7s;
+
+			}
+
+		</style>
+		<script>
+			$$(document).ready(function() {
+				//创建事件监听
+				$$(".lazyload").bind('looked',function () {
+					if($$(this).offset().top < $$(window).scrollTop() + window.screen.availHeight && $$(this).offset().top > $$(window).scrollTop() && $$(this).attr('show') != 'yes'){
+						$$(this).attr('show','yes');
+						showTrueImg2($$(this));
+					}
+				});
+
+				$$(".type").bind('looked',function () {
+					if($$(this).offset().top < $$(window).scrollTop() + window.screen.availHeight*0.5 && $$(this).offset().top > $$(window).scrollTop()){
+						$$(this).css("color",'orange');
+						$$(this).html("点击查看更多<" + $$(this).attr('value') + ">漫画");
+					}
+					else{
+						$$(this).css("color",'black');
+						$$(this).html($$(this).attr('value'));
+					}
+				});
+
+				$$('.lazyload').trigger("looked");
+				//页面上下滚动事件
+				$$(window).scroll(function() {
+					$$('.lazyload').trigger("looked");
+					$$('.type').trigger("looked");
+
+					p = $$(this).scrollTop();
+					if(p<=10){
+						$$('#header').css("display",'none');
+					}
+					else{
+						$$('#header').css("display",'block');
+					}
+					height = $$('#header').height();
+					if (p < height) {
+						$$('.mui-title').css('visibility', 'hidden');
+					} else {
+						$$('.mui-title').css('visibility', '');
+					}
+
+				})
+
+
+			//showTrueImg();
+			})
+
+		</script>
+
+
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-transparent">
+			<a href="/" class="mui-icon mui-icon-back " style="color: orange;"></a>
+			<h1 class="mui-title" style="visibility: hidden;">叶灵漫画 - 移动版</h1>
+
+			<a href="/introduce"><button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" >推荐</button></a>
+
+		</header>
+
+		<!-- 顶部随机图片以及搜索栏 -->
+		<div class='search' onclick="window.location.href = '/search?where=0'">
+			<!-- 搜索栏 -->
+			<div class="mui-input-row mui-search">
+					<input type="search" class="mui-input-clear" id='search' placeholder="搜索"  onkeydown="calAge()" >
+					<script type="text/javascript">
+						//搜索
+						function calAge(e) {
+							var evt = window.event || e;
+							if (evt.keyCode == 13) {
+								window.location.href = '/search?name=' + document.getElementById('search').value + "&where=" + 0;
+							}
+						}
+					</script>
+			</div >
+		</div>
+
+
+		<!-- 章节列表 -->
+		$for m in type:
+			$code:
+				sql = "select mhid,name,members,status from list where type='{}' ORDER BY RAND() limit 6;".format(m[0])
+				ch.execute(sql)
+			<hr><hr>
+			<div id="content">
+			$code:
+				thistype = '/type?type=' + m[0]
+
+			<span class="hello">
+				<span class="hello_content">
+					<h5 style="font-size:16px">$m[0]</h5>
+				</span>
+				<span class="hello_short">
+					<a href="/type?type=$m[0]"><em><small>更多$m[0]漫画</small></em></a>
+				</span>
+			</span>
+			$for i in ch:
+				$code:
+					if m[0] == '成人':
+						cover = '/static/download/{}/0.jpg'.format(i[0])
+					else:
+						cover = '/static/cover/{}.jpg'.format(i[0])
+				<a href="/$i[0]">
+					<div class="mui-card lazyload" cover="$cover">
+						<div class="mui-card-header mui-card-media" style="height: 190px;padding: 0px;">
+							<span style="background-color: rgba(255,255,255,0.7);width: 100%;display: block;color: black;text-align: center;">
+								$i[3] &nbsp;共$i[2] 章
+							</span>
+						</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner name" >
+								$i[1]
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+
+		$code:
+			db.close()
+		<hr>
+		<hr>
+		<p>没有了哦</p>
+
+
+	</body>
+</html>
+

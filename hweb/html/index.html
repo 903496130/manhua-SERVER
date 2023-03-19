@@ -1,0 +1,79 @@
+$def with(page,total_page,list)
+$code:
+	last = page - 1
+	next = page + 1
+	if next > total_page:
+		next = total_page
+	if last < 1:
+		last = 1
+
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>老董鲁斯网</title>
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+		<script>
+			$$(window).ready(function(){
+				arr = $$('.card')
+				for(i = 0;i < arr.length;i++){
+					url = arr[i].getAttribute("url");
+					var img = new Image();
+					img.setAttribute("num",i);
+					img.onload = function(){
+							arr[this.getAttribute('num')].setAttribute('src',this.src);
+							$$(arr[this.getAttribute('num')]).css("opacity",1)
+							$$(arr[this.getAttribute('num')]).addClass("jump")
+							$$(arr[this.getAttribute('num')]).css("background-image","url(" +  this.src + ")")
+					}
+					img.onerror = function() {
+						$$(arr[this.getAttribute('num')]).css("opacity",1)
+						$$(arr[this.getAttribute('num')]).css("background-image","url(" + '/static/pic/error.jpg' + ")")
+					}
+					img.src = url;
+				}
+	
+			});
+	
+		</script>
+	</head>
+	<body>
+
+		<div class="head">
+			欢迎来到&nbsp;老董鲁斯网
+		</div>
+		<div class="head2">
+			
+		</div>
+
+		<hr >
+		<div class="rec">
+			<a href="/random"><span style="background-color: #007AFF;">随机作品推荐</span></a>
+			<a href="/random?type=pic"><span style="background-color: #DD524D;">随机图片推荐</a>
+		</div>
+		<hr >
+		<div class="page-choose">
+			<a href="/?page=$last"><span class="page">上一页</span></a>
+			$page/$total_page
+			<a href="/?page=$next"><span class="page">下一页</span></a>
+		</div>	
+		<hr >
+		<div class="content">
+			$for i in list:
+				<a href="/show/$i[0]">
+					<div class="card" url="$i[2]">
+						<span class="name">$i[1]</span>
+					</div>
+				</a>
+		</div>
+		<div class="page-choose">
+			<a href="/?page=$last"><span class="page">上一页</span></a>
+			$page/$total_page
+			<a href="/?page=$next"><span class="page">下一页</span></a>
+		</div>	
+	</body>
+</html>

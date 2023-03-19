@@ -1,0 +1,134 @@
+$def with(type, order, how, page)
+$code:
+	num = 20
+	if page < 1:
+		page = 1
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+	if type != '全部':
+		sql = "select SQL_CALC_FOUND_ROWS mhid,name,members,status from list where type='{}' order by members desc limit {},{};".format(type,(int(page) - 1) * num,num)
+	else:
+		sql = "select SQL_CALC_FOUND_ROWS mhid,name,members,status from list order by members desc limit {},{};".format((int(page) - 1) * num,num)
+
+	ch.execute(sql)
+	result = ch.fetchall()
+
+	ch.execute('SELECT FOUND_ROWS();')
+	count = ch.fetchone()[0]
+	totalPage = 1
+
+	if count % num != 0:
+		totalPage = count // num + 1
+	else:
+		totalPage = count // num
+
+	if page > totalPage:
+		page = totalPage
+	if page < 1:
+		page = 1
+	db.close()
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>叶灵漫话 ~ $(type)类型漫画列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="referrer" content="no-referrer">
+		<script src="/static/mobile/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/mobile/js/main.js"></script>
+		<script src="/static/mobile/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<link rel="stylesheet" type="text/css" href="/static/mobile/css/mui.min.css" />
+		<link rel="stylesheet" media="(max-width:500px)" type="text/css" href="/static/mobile/css/main.css" />
+		<link rel="stylesheet" media="(min-width:500px)" type="text/css" href="/static/mobile/css/main_pc.css" />
+		<link rel="stylesheet" href="/static/mobile/css/dh.css">
+		<script>
+			var page = $page;
+			var totalPage = $totalPage;
+			var last = "/type?type=" + "$type" + "&page=" + (page - 1);
+			var next = "/type?type=" + "$type" + "&page=" + (page + 1);
+		</script>
+
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-transparent">
+			<a href="/" class="mui-icon mui-icon-back " style="color: orange;"></a>
+			<h1 class="mui-title" style="visibility: hidden;">叶灵漫 - $(type) 漫画查看</h1>
+			<a href="/introduce?where=1"><button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">推荐</button></a>
+
+		</header>
+
+		<!-- 顶部随机图片以及搜索栏 -->
+		<div class='search' onclick="window.location.href = '/search?where=1'">
+
+			<!-- 搜索栏 -->
+			<div class="mui-input-row mui-search">
+				<input type="search" class="mui-input-clear" id='search' placeholder="搜索"  onkeydown="calAge()">
+				<script type="text/javascript">
+					//搜索
+					function calAge(e) {
+						var evt = window.event || e;
+						if (evt.keyCode == 13) {
+							window.location.href = '/search?name=' + document.getElementById('search').value + "&where=" + 1;
+						}
+					}
+				</script>
+			</div >
+		</div>
+
+		<!-- 章节列表 -->
+		<div id="content">
+
+			$for i in result:
+				$code:
+					if type == '成人':
+						cover = '/static/download/{}/0.jpg'.format(i[0])
+					else:
+						cover = '/static/cover/{}.jpg'.format(i[0])
+				<a href="/$i[0]">
+					<div class="mui-card" cover="$cover">
+						<div class="mui-card-header mui-card-media" style="height: 190px;padding: 0px;">
+							<span style="background-color: rgba(255,255,255,0.7);width: 100%;display: block;color: black;text-align: center;">
+								$i[3] &nbsp;共$i[2] 章
+							</span>
+						</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner name" >
+								$i[1]
+							</div>
+						</div>
+					</div>
+				</a>
+		</div>
+
+		<hr>
+
+		<p style="text-align: center;margin: 0px;">$page/$totalPage</p>
+
+		<hr >
+		<div id="num">
+
+		</div>
+		<hr>
+		<div id="" style="text-align: center;height: 30px;">
+			<a href="javascript:turn(1)" style="margin-right: 30px;">上一页</a> |
+			<a href="javascript:turn(2)" style="margin-left: 30px;">下一页</a>
+		</div>
+
+		<script>
+			showTrueImg();
+			for(i = 0;i < totalPage;i++){
+				color = '';
+				url = '/type?type=' + "$type" + "&page=" + (i + 1);
+				if((i + 1) == page){
+					color = 'color:blue';
+				}
+				else color = 'color:skyblue';
+				$$('#num').append('<a href="'+ url + '"><span class="page" style="' + color + '">'+ (i + 1) +'</span></a>')
+			}
+		</script>
+
+	</body>
+</html>
+
+

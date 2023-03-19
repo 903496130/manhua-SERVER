@@ -1,0 +1,68 @@
+$def with(mhid,zjid)
+$code:
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+
+	sql = 'select members,name from list where mhid={};'.format(mhid)
+	ch.execute(sql)
+	members = ch.fetchone()
+	if members == None:
+		return None;
+	else:
+		title = members[1]
+		members = members[0];
+
+
+	sql = 'select name from chapter where mhid={} and zjid={};'.format(mhid,zjid)
+	ch.execute(sql)
+	name = ch.fetchone()[0]
+
+	sql = 'select SQL_CALC_FOUND_ROWS url from url where mhid={} and zjid={} order by tpid;'.format(mhid,zjid)
+	ch.execute(sql)
+	result = ch.fetchall();
+	sql = 'SELECT FOUND_ROWS()'
+	ch.execute(sql)
+	count = ch.fetchone()[0];
+	if count == 0:
+		return 'error'
+
+<title>$name 在线观看 - 叶灵漫画</title>
+<link rel="stylesheet" href="/static/pc/css/show.css">
+<script src="/static/pc/js/show.js"></script>
+<script>
+	var count = $count;
+	var members = $members;
+	var mhid = $mhid;
+	var now = $zjid
+	var path = '<span>\>当前位置：</span><a href="/">首页</a>&nbsp;&nbsp;<a href="/$mhid">$title</a>&nbsp;&nbsp;<a href="/$mhid">$name</a>'
+
+</script>
+
+<!-- <div id="pic-title">
+	<span id='name-content'>$name</span>
+</div> -->
+
+<div id="pic">
+	<div id="pic-arr">
+		$for i in range(len(result)):
+			$code:
+				num = i + 1
+			<img class="pic-content" src="/static/pic/loading.gif" url="$result[i][0]" num="$num">
+
+	</div>
+</div>
+<div id="page-choose">
+	<a class="btn btn-default" href="javascript:turn(0);" role="button">上一章</a>
+	&nbsp;&nbsp;
+	$code:
+		a = "{}".format(int(zjid) + 1)
+	<span id='page-show-bootom' style="color: white;">$a/$members</span>
+	&nbsp;&nbsp;
+	<a class="btn btn-default" href="javascript:turn(1);" role="button">下一章</a>
+</div>
+
+<div id="page-show">
+	--/--
+</div>
+$code:
+	db.close()

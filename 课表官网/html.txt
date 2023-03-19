@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>现代教学管理信息系统</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta content="all" name="robots">
+    <meta name="author" content="作者信息">
+    <meta name="Copyright" content="版权信息">
+    <meta name="description" content="站点介绍">
+    <meta name="keywords" content="站点关键词">
+    <link rel="icon" type="image/x-icon" href="style/4.0.0.1/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="style/4.0.0.1/images/favicon.ico" />
+    <link rel="stylesheet" href="/style/4.0.0.1/css/common.css">
+    <link rel="stylesheet" href="/style/4.0.0.1/css/jwstyle.css">
+    <link rel="stylesheet" href="/style/4.0.0.1/css/kebiao.css">
+    <link rel="stylesheet" type="text/css" href="/style/4.0.0.1/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/style/4.0.0.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="/style/4.0.0.1/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/style/4.0.0.1/js/bootstrap.min.js"></script>
+    <!--<script defer>   
+		function  PutSettings()   
+			{     
+			factory.printing.header="";   
+			factory.printing.footer="";   
+		    factory.printing.leftMargin="5";   
+			factory.printing.topMargin="5";   
+			factory.printing.rightMargin="5";   
+			factory.printing.bottomMargin="5";
+		 }
+					</script>-->
+    <style>
+        @media Print {
+            .bgnoprint {
+            }
+
+            .noprint {
+                DISPLAY: none
+            }
+        }
+    </style>
+     <style type="text/css">
+        .tablesec {
+            position: relative;
+        }
+         .schedule tr td:first-child {
+             white-space:normal;
+         }
+
+        .newschedule {
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            background: #ffffff;
+        }
+
+        .oldschedule {
+            width: 100%;
+            z-index: 5;
+            overflow-x: auto;
+        }
+    </style>
+    <script type="text/javascript">
+        jQuery(function () {
+            var newtbele = jQuery('<div class="newschedule"></div>');
+            var newtable = jQuery('#Table1').clone(true);
+            newtable.appendTo(newtbele);
+            newtbele.width(jQuery('#Table1 tr:first td:first').outerWidth() + 1);
+            jQuery('#Table1').after(newtbele);
+            jQuery('#Table1').wrap("<div class='oldschedule'></div>");
+        })
+    </script>
+</head>
+<body class="combody">
+    <!--<OBJECT id="factory" style="DISPLAY: none" codeBase="ScriptX.cab#Version=5,60,0,360" classid="clsid:1663ed61-23eb-11d2-b92f-008048fdd814"
+			VIEWASTEXT>
+		</OBJECT>-->
+    <form name="xskb_form" method="post" action="./xskbcx.aspx?xh=2017011295&amp;gnmkdm=N121603" id="xskb_form">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="gtKztgtg6E5CcRwd073u7VT6RHsFTsHSMhT/imz5IA/4tFxDGtHJkBmN0tdQCZ6fqRqF2UcU51KttEGmVMevA8n4Ncm90RFjB0POTsLnNOx3EZ6YL1Sun9I6OZT91TsGmcfHI7v2mdAXkjLDvpaxXBAykKGIvLoM23Dazj7mPfYn2w7pcpH5fCrA4+psK0akVYJa5ecxDFbIaAobhCM9/aMkFWSNywk4u6wM6BEqqK0SLAFOZFnP9PKs5MvTvH/dHlSiQUjbhrHd7mrbPKBk7565NiQvQroIniKxdIykiat32C9QPaDdfJGhXXLlDGRqnn6UDPi5GkvKzFjtx1j/0C6Apz/Xp9zuZVoPJ7cB0qa56CMEsP5HL36GWJPjd+9ALPCW9KxSi7avwGkFXDSmNrJ5GZCy40PYpi2iG+uDm9f7t+ne5nIAbt6YcSvmqqYkj/AcOmQOMM36obNcHlk6ohvwEzkZ6KGHl/uuWn677cw7A8HxylWs3CQwFqMs5/x/XeyfKvDStAoBZBOHK6Jx/64L74z9R9aHgFt3HaV3rpyuQLFBzzk2Y3DWe9JKX+5DuwSjZWsQmFogNM4bVWTRd62xNeQj6RixvIEhgkwP+UgKwnhUP2icIS1jM6XY087aadu64ktHL2Z8dJ+D0UOqO5vDT1GXBwX4k+im5CHO7o8od2F7tWzHPOLYrFV6kT/I+ORDRnbQxibvoSNRKuWskfFFvsVpqJWejZ2l4jsyhPnrnIztZg+BDsovupZ6jiks42PbwqAA1X4ROqg/RMw+fnOfPAF+d/HWRiL0l4cmpCg5YV75KToZZi3iySxig8Y5ZylCpUw3cNxt6F6mdLZ9jkVBErhtoQGl/yZ6sDpuV42GjlOIzCZXyxt8dSW0R0/I6evTInJm6AURNycr19J0ZhXUXy2OLblHBQHsQvMf+DgQ3aQEswWa2TcO/ZfhTCnab/WUAOx8FAkKU3mjIKSSOanbz4Z+HVGNxfurdGaUvZRkdxUuUGGXkgrmPwGgnUk3tgrjtUonxk9c9NKyPLNHUDZyHOsZNa7Y69mXG1B97EeHFpsXJkwXhNI6JRAKNU/bYjUjXcW/HISsMttVNl4/O5gsTLjQCFtB/+Zhxqd2LU4KmMwDgTQlIpc7/pWl+DkndZKaEgPP8LbDtjHR63vVgl1fv4gtyRGE+/RpYc40ekJHR6L4KbkhrGv5eVZjoJ2QVsMpO1vcc6o/8j9zhhvQVCV+Y5MbzQ0itdgKBK5uZxSU3UPQyKrhiKY/G67PTNjwCs0G8VZNV/NBRKZMxOFQr4BZ3M/9SQpEibEq2F+3tajYaunY9Q3NS80zOuo9iwbAk4iHXx3SZd8I2cpiHeixIf5oButlTl0X/lPc38N8F6pnytIubwGwlr4E/CVOa3J9QJY2hlyonM/60lhlwtJFwUQr048=" />
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="817A6D9A" />
+        <div class="toolbox1">
+            <!-- 过滤条件开始 -->
+            <div class="searchbox">
+                <div class="search_con">
+                    <span id="Label5">学号：2017011295</span>|
+					<span id="Label6">姓名：姜兆光</span>|
+					<span id="Label7">学院：计算机学院</span>|
+					<span id="Label8">专业：网络工程(卓越)</span>|
+					<span id="Label9">行政班：网工1701</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span id="labTS"><font color="Red"></font></span>
+                    <span id="labTip"><font color="Red"></font></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="mid-box-title">
+            <div class="bgcttit">
+                <p>
+                    
+                    <select name="xnd" id="xnd" class="form-control">
+	<option selected="selected" value="2019-2020">2019-2020</option>
+	<option value="2018-2019">2018-2019</option>
+	<option value="2017-2018">2017-2018</option>
+
+</select>
+                    <span id="Label2"><font size="4">学年第</font></span>
+                    <select name="xqd" id="xqd" class="form-control">
+	<option value="1">1</option>
+	<option selected="selected" value="2">2</option>
+	<option value="3">3</option>
+
+</select>
+                    <span id="Label1"><font size="4">学期学生个人课程表</font></span>
+                </p>
+            </div>
+        </div>
+        
+
+        <div class="class-schedule">
+            <div class="combk">
+                <div class="tablesec">
+                    <table id="Table1" class="schedule" rules="all" bordercolor="Black" border="0" width="100%">
+	<tr>
+		<td colspan="2" rowspan="1" width="2%">时间</td><td align="center" width="14%">星期一</td><td align="center" width="14%">星期二</td><td align="center" width="14%">星期三</td><td align="center" width="14%">星期四</td><td align="center" width="14%">星期五</td><td class="noprint" align="center" width="14%">星期六</td><td class="noprint" align="center" width="14%">星期日</td>
+	</tr><tr>
+		<td colspan="2">早晨</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td rowspan="5" width="1%">上午</td><td width="1%">第1节</td><td align="center" width="7%">&nbsp;</td><td align="center" width="7%">&nbsp;</td><td align="center" width="7%">&nbsp;</td><td align="center" width="7%">&nbsp;</td><td align="center" rowspan="2" width="7%">网络工程师职业认证<br>专业选修<br>周五第1,2节{第7-7周|单周}<br>凌涛<br>2-2-111(原103)<br><br>网络工程师职业认证<br>专业选修<br>周五第1,2节{第1-5周}<br>凌涛<br>2-2-111(原103)</td><td class="noprint" align="center" width="7%">&nbsp;</td><td class="noprint" align="center" width="7%">&nbsp;</td>
+	</tr><tr>
+		<td>第2节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第3节</td><td align="center" rowspan="3">网络规划与设计<br>专业必修<br>周一第3,4,5节{第1-10周}<br>马利民<br>2-2-111(原103)<br><br>网络规划与设计<br>专业必修<br>周一第3,4节{第11-11周|单周}<br>马利民<br>2-2-111(原103)</td><td align="center" rowspan="2">网络攻防技术实践<br>专业实践<br>周二第3,4节{第1-16周}<br>焦健<br>2-中心-A</td><td align="center" rowspan="3">软件工程<br>专业必修<br>周三第3,4,5节{第1-12周}<br>郑丽伟<br>2-3-五阶梯<br><br>软件工程<br>专业必修<br>周三第3,4节{第13-14周}<br>郑丽伟<br>2-3-五阶梯</td><td align="center" rowspan="3">网络安全<br>专业必修<br>周四第3,4,5节{第1-14周}<br>孟坤<br>2-2-425(原413)<br><br>网络安全<br>专业必修<br>周四第3,4节{第15-15周|单周}<br>孟坤<br>2-2-425(原413)</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第4节</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第5节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td rowspan="4">下午</td><td>第6节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center" rowspan="2">Web安全与渗透测试<br>实践选修<br>周五第6,7节{第1-5周}<br>焦健<br>2-中心-A<br><br>Web安全与渗透测试<br>实践选修<br>周五第6,7节{第11-13周}<br>焦健<br>2-中心-A<br><br>Web安全与渗透测试<br>实践选修<br>周五第6,7节{第7-9周}<br>焦健<br>2-中心-A</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第7节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第8节</td><td align="center" rowspan="2">网络规划与部署综合实践<br>专业实践<br>周一第8,9节{第1-4周}<br>徐雅斌<br>2-1-三阶梯</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">Web安全与渗透测试<br>实践选修<br>周五第8节{第1-5周}<br>焦健<br>2-中心-A<br><br>Web安全与渗透测试<br>实践选修<br>周五第8节{第11-12周}<br>焦健<br>2-中心-A<br><br>Web安全与渗透测试<br>实践选修<br>周五第8节{第7-9周}<br>焦健<br>2-中心-A</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第9节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td rowspan="4">晚上</td><td>第10节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第11节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第12节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr><tr>
+		<td>第13节</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td><td class="noprint" align="center">&nbsp;</td>
+	</tr>
+</table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="formbox">
+            
+            
+            <div class="formbox-title clearfix">
+                <h3>调、停（补）课信息：</h3>
+            </div>
+            <div class="portallet">
+                <table cellspacing="0" cellpadding="3" class="responsive table" border="0" id="DBGrid" width="100%">
+	<tr class="datelisthead">
+		<td>编号</td><td>课程名称</td><td>原上课时间地点教师</td><td>现上课时间地点教师</td><td>申请时间</td>
+	</tr>
+</table>
+            </div>
+
+            <div id="tr_sjk" class="formbox-title clearfix">
+                <h3>实践课(或无上课时间)信息：</h3>
+            </div>
+            <div id="tr_dtsjk" class="portallet">
+                <table cellspacing="0" cellpadding="3" class="responsive table" border="0" id="DataGrid1" width="100%">
+	<tr class="datelisthead">
+		<td>课程名称</td><td>教师</td><td>学分</td><td>起止周</td><td>上课时间</td><td>上课地点</td>
+	</tr><tr>
+		<td>网络安全综合实践</td><td>孟坤</td><td>1.5</td><td>01-18</td><td>&nbsp;</td><td>&nbsp;</td>
+	</tr>
+</table>
+            </div>
+
+            <div class="formbox-title clearfix">
+                <h3>实习课信息：</h3>
+            </div>
+            <div class="portallet">
+                <table cellspacing="0" cellpadding="3" class="responsive table" border="0" id="DBGridYxkc" width="100%">
+	<tr class="datelisthead">
+		<td>学年</td><td>学期</td><td>课程名称</td><td>实习时间</td><td>模块代号</td><td>先修模块</td><td>实习编号</td>
+	</tr>
+</table>
+            </div>
+            <div id="tr_wap" class="formbox-title clearfix">
+                <h3>未安排上课时间的课程：</h3>
+            </div>
+            <div id="tr_dtwap" class="portallet">
+                <table cellspacing="0" cellpadding="3" class="responsive table" border="0" id="Datagrid2" width="100%">
+	<tr class="datelisthead">
+		<td>学年</td><td>学期</td><td>课程名称</td><td>教师姓名</td><td>学分</td>
+	</tr><tr>
+		<td>2019-2020</td><td>2</td><td>创业基础（通识课）</td><td>网络通识</td><td>2.0</td>
+	</tr><tr class="alt">
+		<td>2019-2020</td><td>2</td><td>网络安全综合实践</td><td>孟坤</td><td>1.5</td>
+	</tr>
+</table>
+            </div>
+
+        </div>
+     
+    </form>
+</body>
+</html>

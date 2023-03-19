@@ -1,0 +1,195 @@
+$code:
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+
+<title>叶灵漫画 - 首页 - 鬼灭之刃 进击的巨人 火影忍者 死神 在线观看</title>
+<script>
+	var path = ''
+</script>
+<link rel="stylesheet" type="text/css" href="/static/pc/css/main.css" />
+<div id="main">
+	<div id="left_content">
+		<div id="left-top">
+			<div class="card recent show1">
+				<!-- 最近更新 -->
+				<span class="hello">
+					<span class="hello_content">
+						<h5>最近更新</h5>
+					</span>
+					<span class="hello_short">
+						<em><small>Recent updates</small></em>
+					</span>
+				</span>
+				$code:
+					sql = 'select mhid,name,type,author,update_date,members from list where position=0 order by update_date desc limit 30;'
+					ch.execute(sql)
+				<div class='scroll scroll-bar'>
+				$for i in ch:
+					<a href="/$i[0]">
+						<div class="small-cover" >
+							<img class='small-cover-img' src="/static/cover/$(i[0]).jpg" >
+							<div class="small-cover-right">
+								<span class="small-cover-name"><strong style="overflow: hidden;">$i[1]</strong></span>
+								<small>类型：$i[2][0:10]</small><br>
+								<small>作者：$i[3][0:4]</small><br>
+								<small>$i[5]话-$i[4][0:10]</small>
+							</div>
+						</div>
+					</a>
+				</div>
+
+
+				<!-- 最近更新结束 -->
+			</div>
+
+
+			<div class="card typeshow show2">
+				<!-- 分类显示区开始 -->
+
+				<div class="type">
+					<span class="hello" style="border-right: 2px solid #122B40;">
+						<span class="hello_content">
+							<h5>类别</h5>
+						</span>
+						<span class="hello_short">
+							<em><small>Type</small></em>
+						</span>
+					</span>
+
+					<span class="type-name" attr='juqing'>剧情</span>
+					<span class="type-name" attr='danmei'>耽美</span>
+					<span class="type-name" attr='gaoxiao'>搞笑</span>
+					<span class="type-name" attr='maoxian'>冒险</span>
+					<span class="type-name" attr='xiaoyuan'>校园</span>
+					<span class="type-name" attr='qinqing'>亲情</span>
+					<span class="type-name" attr='kehuan'>科幻</span>
+					<span class="type-name" attr='oumei'>欧美</span>
+					<span class="type-name" attr='gedou'>格斗</span>
+					<span class="type-name" attr='xiaoshuo'>小说</span>
+					<a href="/type"><span class="more">全部分类</span></a>
+
+				</div>
+
+				<div class="type-content">
+
+					$code:
+						list = ["剧情","耽美","搞笑","冒险","校园","亲情","科幻","欧美","格斗","小说"]
+						dic = {
+							"剧情":"juqing","耽美":"danmei","搞笑":"gaoxiao","冒险":"maoxian","校园":"xiaoyuan","亲情":"qinqing","科幻":"kehuan","欧美":"oumei","格斗":"gedou","小说":"xiaoshuo"
+						}
+					$for name in list:
+						$code:
+							pinyin = dic[name]
+							sql = "select mhid,name,status,members from list where position = 0 and type='{}' order by members desc limit 8".format(name);
+							ch.execute(sql)
+							if name != '剧情':
+								show = 'none'
+							else:
+								show = 'flex'
+						<!-- $name -->
+						<div class="$pinyin full scroll-bar" style="display: $show;">
+						$for i in ch:
+							<a href="/$i[0]" style="width: 23%;">
+								<div class="cover" >
+									<img class="book-cover" src="/static/cover/$(i[0]).jpg">
+									<span class="book-status">$i[3] - $i[2]</span>
+									<span class="book-name">$i[1]</span>
+								</div>
+							</a>
+						</div>
+				</div>
+
+
+
+				<!-- 分类显示区结束 -->
+			</div>
+
+		</div>
+
+		<div class="rec card show3">
+			<span class="hello">
+				<span class="hello_content">
+					<h5>随机推荐</h5>
+				</span>
+				<span class="hello_short">
+					<em><small>Random Recommend</small></em>
+				</span>
+			</span>
+			<!-- 随即推荐区开始 -->
+
+			$code:
+				sql = "select mhid,name,status,members from list order by rand() limit 10".format(name);
+				ch.execute(sql)
+			<div class="scroll-left scroll-bar-left">
+			$for i in ch:
+				<a href="/$i[0]">
+					<div class="cover">
+						<img class="book-cover" src="/static/cover/$(i[0]).jpg">
+						<span class="book-status">$i[3] - $i[2]</span>
+						<span class="book-name">$i[1]</span>
+					</div>
+				</a>
+			</div>
+
+
+			<!-- 随即推荐区结束 -->
+		</div>
+
+		<div class="ad card show3">
+			<span class="hello">
+				<span class="hello_content">
+					<h5>广告位招租~</h5>
+				</span>
+				<span class="hello_short">
+					<em><small>Advertising for rent</small></em>
+				</span>
+			</span>
+
+			<!-- 广告区开始 -->
+
+
+
+
+
+			<!-- 广告区结束 -->
+		</div>
+
+	</div>
+
+	<div class="card hotshow show2">
+		<span class="hello">
+			<span class="hello_content">
+				<h5>热门动漫</h5>
+			</span>
+			<span class="hello_short">
+				<em><small>Popular cartoon</small></em>
+			</span>
+		</span>
+
+		<!-- 热门动漫区开始 -->
+		$code:
+			sql = 'select mhid,name,type,author,update_date,members from list where position=0 order by members desc limit 30;'
+			ch.execute(sql)
+		<div class='scroll scroll-bar' style="height: 96%;">
+		$for i in ch:
+			<a href="/$i[0]">
+				<div class="small-cover">
+					<img class='small-cover-img' src="/static/cover/$(i[0]).jpg" >
+					<div class="small-cover-right">
+						<span class="small-cover-name"><strong style="overflow: hidden;">$i[1]</strong></span>
+						<small>类型：$i[2][0:10]</small><br>
+						<small>作者：$i[3][0:4]</small><br>
+						<small>$i[5]话-$i[4][0:10]</small>
+					</div>
+				</div>
+			</a>
+		</div>
+
+
+		<!-- 热门动漫区结束 -->
+
+	</div>
+
+</div>
+$code:
+	db.close()

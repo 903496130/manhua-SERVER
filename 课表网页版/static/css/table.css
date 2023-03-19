@@ -1,0 +1,215 @@
+body {
+	background: white;
+	font-family: '微软雅黑';
+}
+
+table { 
+	width: 100%;
+}
+.top{
+
+}
+
+#header {
+	position: absolute;
+	width: 100%;
+	z-index: 10;
+}
+
+#fakehead{
+	height: 100px;
+	overflow: hidden;
+	width: 100%;
+	border: 1px red solid;
+}
+
+.scroll{
+
+}
+
+.show {
+	animation: goshow 1.5s;
+	animation-fill-mode: forwards
+}
+
+@keyframes goshow {
+	0% {
+		opacity: 0;
+	}
+ 
+	100% {
+		opacity: 1;
+	}
+}
+
+.day {
+	width: 13%;
+	min-width: 13%;
+	font-size: 13px;
+	font-weight: bold;
+	background-color: rgb(247, 247, 247);
+	background-color: white;
+	height: 30px;
+	text-align: center;
+
+	border-bottom: rgb(194, 187, 177) 1px solid;
+
+	height: 45px;
+}
+
+.choosen {
+	animation: gochoosen 3s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes gochoosen {
+	0% {
+		color: black;
+	}
+
+	20% {
+		background-color: #6641E2;
+	}
+
+	50% {
+		background-color: #6641E2;
+		color: white;
+	}
+
+	100% {
+		background-color: #6641E2;
+		color: white;
+	}
+}
+
+.date {
+	font-size: 10px;
+	animation: godate 2s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes godate {
+	0% {
+		font-size: 10px;
+		opacity: 0;
+	}
+
+
+	70% {
+		font-size: 10px;
+		opacity: 1;
+	}
+}
+
+.month {
+	font-size: 10px;
+	width: 9%;
+}
+
+.num {
+	font-size: 13px;
+	width: 9%;
+	font-weight: bold;
+	text-align: center;
+	border-right: rgb(194, 187, 177) 1px solid;
+	border-bottom: rgb(194, 187, 177) 1px dotted;
+	background: rgb(247, 247, 247);
+	height: 65px;
+	z-index: 10;
+	background-color: white;
+}
+
+.dd,
+.bb {
+	text-align: center;
+	background: rgb(243, 243, 243);
+	width: 13%;
+	font-size: 9px;
+	font-weight: 700;
+
+}
+
+.bb {
+	animation: gobb 2s;
+	animation-fill-mode: forwards;
+}
+
+.dd {
+	background: white;
+}
+
+.time {
+	font-size: 10px;
+	font-weight: 500;
+}
+
+.course {
+
+	color: white;
+	border: white 1px solid;
+	border-radius: 6px;
+	font-size: 11px;
+	animation: goout 0.7s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes godd {
+	0% {
+		background-color: white;
+	}
+
+	100% {
+		background-color: white;
+	}
+}
+
+@keyframes gobb {
+	0% {
+		background-color: white;
+	}
+
+	100% {
+		background-color: rgb(243, 243, 243);
+	}
+}
+
+@keyframes goout {
+	0% {
+		transform: scale(0, 0);
+	}
+
+	70% {
+		transform: scale(1.5, 1.1);
+
+	}
+
+	100% {
+		transform: scale(1, 1);
+	}
+}
+
+#left{
+	background: url(../pic/left.jpg) fixed center no-repeat;
+	background-size: cover;  
+	background-position: left bottom;
+	
+}
+
+.mui-table-view-cell{
+	background-color: white;
+}
+.mui-table-view-cell::after{
+	height: 0px;
+}
+
+
+.wuxiu {
+	background: url(../pic/mid.jpg) fixed center no-repeat;
+	background-size: cover;
+	background-position: bottom;
+	text-align: center;
+	font-size: 17px;
+	color: #000000;
+	font-weight: 600;
+	content: "";
+}

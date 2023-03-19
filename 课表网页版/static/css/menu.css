@@ -1,0 +1,39 @@
+#left{
+	background-color: white;
+	border-right: rgb(194, 187, 177) 1px solid;"
+}
+
+#head {
+	display: block;
+	border: lightsteelblue 2px solid;
+	margin: auto;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	width: 100px;
+	height: 100px;
+	background-color: #ffffff;
+	border-radius: 9999px;
+}
+
+li{
+	border: rgb(244, 244, 244) 2px solid;
+	border-radius: 10px;
+	width: 90%;
+	margin: auto;
+}
+
+.fill{
+	display: block;
+	margin: auto;
+	background-color: rgb(244, 244, 244);
+	margin-top: 20px;
+
+}
+#copyright{
+	color: black;
+	margin-top:5px;
+	
+	display: block;
+	font-size: 10px;
+	text-align: center;
+}

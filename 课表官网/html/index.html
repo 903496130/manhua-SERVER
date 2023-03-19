@@ -1,0 +1,78 @@
+$def with(tag)
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="source/js/mui.min.js"></script>
+		<link href="source/css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body{
+				background: url("https://cdn.img.wenhairu.com/images/2020/03/17/m3vZA.jpg") no-repeat fixed;
+				background-position: center;
+				background-size: cover;
+			}
+		</style>
+		 
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+			
+		</script>
+		<style type="text/css">
+			.mui-card {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background-color: white;">
+			<h1 id="num" class="mui-title">下载</h1>
+		</header>
+		<br><br><br>
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=86 src="//music.163.com/outchain/player?type=2&id=167755&auto=0&height=66"></iframe>
+		<div class="mui-card">
+			<!--页眉，放置标题-->
+			<div class="mui-card-header mui-card-media">
+				<img src="source/pic/head.jpg" style='border: 1px solid #949494;' />
+				<div class="mui-media-body">
+					姜兆光
+					<p>发表于 2020-3-17 11:54</p>
+				</div>
+			</div>
+			<!--内容区-->
+			<div class="mui-card-content">
+				<img src="source/pic/background.png" style="height: 300px;margin: auto;display: block;">
+			</div>
+			<!--页脚，放置补充信息或支持的操作-->
+			<div class="mui-card-footer">
+				<h6>version beta 0.4 重要更新！</h6>
+				<a id="download">下载</a>
+			</div>
+			
+
+		</div>
+		<br>
+		<h5 style="text-align: center;color: white;font-weight: 550;">*微信用户请用浏览器打开下载</h5>
+	</body>
+</html>
+
+
+
+<script type="text/javascript">
+
+	$if tag == 1:
+		document.getElementsByClassName('mui-bar-nav')[0].setAttribute("style",'background-color: white;')
+		
+	$if tag == 0:
+		document.getElementsByClassName('mui-bar-nav')[0].setAttribute("style",'background-color: white;')
+
+	mui("body").on("tap","a",function(){
+	$if tag == 1:
+		mui.alert("微信用户请点击右上角“…”菜单，\n点击菜单中的“在浏览器中打开”\n进行下载");
+		document.getElementsByClassName('mui-bar-nav')[0].setAttribute("style",'background-color: #ededed;')
+	$if tag == 0:
+		document.location="/download";
+		document.getElementsByClassName('mui-bar-nav')[0].setAttribute("style",'background-color: white;')
+	});
+	
+</script>

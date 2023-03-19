@@ -1,0 +1,155 @@
+#main{
+	width: 98%;
+	margin: auto;
+	display: flex;
+}
+
+#left_content{
+	display: inline-block;
+	width: 15%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+}
+
+#right_content{
+	display: inline-block;
+	height: 100%;
+	width: 83%;
+	top: 0px;
+	left: 16%;
+}
+
+#info{
+	display: block;
+	width: 100%;
+	height: 200px;
+}
+#info-img{
+	display: inline-block;
+	height: 80%;
+	margin: 20px;
+	box-shadow:-5px -5px 0px 5px #ffffff , 5px 5px 0px 5px #ffffff , 5px 5px 0px 9px #007AFF , -5px -5px 0px 9px #d06954;
+
+}
+#info-img img{
+	height: 100%;
+}
+#info-text{
+	display: inline-block;
+	position: absolute;
+	height: 100%;
+	width: 70%;
+	padding: 10px;
+}
+#info-name{
+	font-size: 30px;
+}
+.info-text-child{
+	margin: 2px;
+}
+
+#statement{
+	display: inline-block;
+	position: absolute;
+	height: 90%;
+	right: 0%;
+	width:400px;
+	border-left: 1px solid #a3a3a3;
+	margin: 10px;
+}
+
+#intro{
+	display: block;
+	width: 100%;
+}
+#intro-text{
+	padding: 10px;
+}
+
+#chapter{
+	display: block;
+	width: 100%;
+
+}
+#chapter-content{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content:center;
+	overflow: hidden;
+	padding-left: 10px;
+	padding-right: 10px;
+
+}
+
+.chapter-content-node{
+	display: flex;
+	width: 7%;
+	height: 60px;
+	border: 3px solid #aaaa7f;
+	margin: 10px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 13px;
+	overflow: hidden;
+}
+
+#comments{
+	display: block;
+	width: 100%;
+
+}
+
+
+
+.comments{
+	margin: 10px;
+	border-bottom: 1px solid #d8d8d8;
+}
+
+.comments-info{
+	position: relative;
+	height: 50px;
+	margin: 10px;
+
+}
+
+.comments-tx{
+	position: absolute;
+	height: 100%;
+	top: 0px;
+	margin: 3px;
+	border-radius: 100px;
+	border: 2px solid #d8d8d8;
+	overflow: hidden;
+}
+.comments-user-info{
+	position: absolute;
+	display: inline-block;
+	padding: 10px;
+	width: 300px;
+	left: 50px;
+	top: 0px;
+}
+.comments-username{
+	display: block;
+}
+
+.comments-date{
+	display: block;
+}
+
+.comments-content-text{
+	padding: 10px;
+}
+#page-choose{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.btn{
+	margin: 3px;
+}

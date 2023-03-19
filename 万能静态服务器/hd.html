@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body {
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+			#content {
+				width: 100vw;
+				height: 100vh;
+				font-family: "楷体";
+				font-size: 250px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: white;
+				background: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic2.16pic.com%2F00%2F23%2F64%2F16pic_2364670_b.jpg&refer=http%3A%2F%2Fpic2.16pic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620623655&t=d7e2efc64a8df1ec32749f12d9cab117") center fixed no-repeat;
+				background-size: 100% 100%;
+				-webkit-text-stroke: 4px #000000;
+			}	
+			
+		</style>
+
+		<script type="text/javascript">
+			var done = [];
+			
+			function set() {
+				$("#content").text($("#input").val());
+			}
+
+			function random1() {
+				arr = ['', '回头是岸', '眉开眼笑', '盲人摸象', '打草惊蛇', '鸡飞蛋打', '龙飞凤舞', '螳螂捕蝉黄雀在后', '守株待兔', '闻鸡起舞', '笑里藏刀', '青梅竹马', '调虎离山', '夫唱妇随', '无中生有', '低声下气', '狐假虎威', '胸有成竹', '左右为难', '东张西望'];
+				times = 0;
+				while(true){
+					a = arr[Math.floor(Math.random() * arr.length)];
+					if(done.indexOf(a) == -1){
+						$("#content").text(a);
+						done.push(a)
+						break;
+					}
+					times++;
+					if(times > arr.length){
+						alert("没有了");
+						break;
+					}
+				}
+			}
+
+			function random2() {
+				arr = ['', '守门员', '一手遮天', '赤壁', '母亲', '刘翔', '腰带', '钻戒', '如来神掌', '沙僧', '耳', '豆沙包', '打火机', '虎', 'NBA', '捧腹大笑', '口红', '圣经', '大树', '对牛弹琴', '仙人掌', '除草剂', '实验室', '大头鱼', '冰糖葫芦', '鹦鹉', '小霸王', '护膝', '工资', '升旗', '狮子座', '耳机飞碟', '理发师', '火车', '泪流满面', '虎头蛇尾', '鲜橙多', '环保', '台灯', '内裤', '布娃娃', '蝴蝶', '牛肉干', '冬瓜', '空格键', '雷人', 'KTV', '荷花', '牛奶糖', '首饰', '扬州炒饭', '丸子', '长江三峡', '花朵', '七上八下', '刀', '秦始皇兵马俑', '水波', '娃哈哈', '老爷车', '牛肉面', '音响', '乌鸦喝水', '手套', '汉堡', '排插', '结婚证', '烟斗', '刻舟求剑', '三头六臂', '针筒', '愚公移山', '教师', '网址', '烘干机', '纸杯', '画蛇添足', '不入虎穴焉得虎子', '语文书', '画饼充饥', '监狱', '长颈漏斗', '棉花', '跑步', '落地灯', '全家桶', '欢乐谷', '击剑', 'CD', '医生', '篮球架', '油', '耳机', '土豆', '衣橱', '鲜花', '放风筝', '掩耳盗铃'];
+				times = 0;
+				while(true){
+					a = arr[Math.floor(Math.random() * arr.length)];
+					if(done.indexOf(a) == -1){
+						$("#content").text(a);
+						done.push(a)
+						break;
+					}
+					times++;
+					if(times > arr.length){
+						alert("没有了");
+						break;
+					}
+				}
+				console.log(done);
+			}
+		</script>
+
+	</head>
+	<body>
+		<input type="text" id="input" />
+		<button type="button" onclick="set()">生成</button>
+		<button type="button" onclick="random1()">short</button>
+		<button type="button" onclick="random2()">long</button>
+
+		<div id="content">
+			
+		</div>
+	</body>
+
+</html>

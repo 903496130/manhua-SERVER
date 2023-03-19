@@ -1,0 +1,5 @@
+select SQL_CALC_FOUND_ROWS mhid,name from list where match(name) against('+爱' IN BOOLEAN MODE) and position=0 limit 30,60;
+SELECT FOUND_ROWS();
+
+
+update list set cover = (select url from url where url.mhid=list.mhid and zjid=0 and tpid=0);

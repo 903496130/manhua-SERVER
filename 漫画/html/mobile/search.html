@@ -1,0 +1,159 @@
+$def with(name,page)
+$code:
+	num = 18
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+	sql = "select SQL_CALC_FOUND_ROWS mhid,name,members,status,cover from list where match(name) against('{}' IN BOOLEAN MODE) order by members desc limit {},{};".format(name,num*(int(page)-1),num)
+	ch.execute(sql)
+	result = ch.fetchall()
+	ch.execute('SELECT FOUND_ROWS();')
+	count = ch.fetchone()[0]
+
+	if count % num == 0:
+		totalPage = count // num
+	else:
+		totalPage = count // num + 1
+
+	if count != 0:
+		if int(page) > totalPage:
+			page = totalPage
+		#进行结果排版，先查询
+
+	color = 'rgb(232, 232, 232)'
+
+	name = name.replace("+"," ")
+
+	db.close()
+
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="/static/mobile/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/mobile/js/mui.js"></script>
+		<script src="/static/mobile/js/search.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="/static/mobile/css/mui.min.css" />
+		<link rel="stylesheet" href="/static/mobile/css/search.css">
+		<link rel="stylesheet" href="/static/mobile/css/dh.css">
+		<title>叶灵漫画 - $(name)搜索结果</title>
+		<style type="text/css">
+
+		</style>
+
+		<script type="text/javascript">
+			var totalPage = $totalPage;
+			var name = "$name";
+			var page = $page;
+		</script>
+
+	</head>
+	<body>
+
+		<div id="header">
+			<img id="logo" src="./static/pic/logo.png" onclick="window.location.href='/'">
+			<div id="input">
+				<input id="keyword" placeholder="百度两下,你才知道" onkeydown="calAge();" value="$name" oninput="setTipPosition();" />
+				<img src="./static/pic/search_1.png" id='search'>
+			</div>
+		</div>
+
+		<div id='tips' style="display: none;text-align: center;" class="top">
+
+		</div>
+
+		<div id="content">
+			$if count != 0:
+				$for i in result:
+					$code:
+						cover = '/static/cover/{}.jpg'.format(i[0])
+
+					<div class="mui-card show" cover="$cover">
+						<a href="/$i[0]">
+							<div class="mui-card-header mui-card-media" style="height: 190px;padding: 0px;">
+								<span style="background-color: rgba(255,255,255,0.7);width: 100%;display: block;color: black;text-align: center;">
+									$i[3] &nbsp;共$i[2]章
+								</span>
+							</div>
+							<div class="mui-card-content">
+								<div class="mui-card-content-inner name" >
+									$i[1]
+								</div>
+							</div>
+						</a>
+					</div>
+				$code:
+
+			$else:
+				$for i in range(1):
+					<img src="/static/pic/none.png" style="width: 60%;max-width: 300px;margin: 70px;"><br>
+					<p style="width: 100%;text-align: center;">无搜索结果</p>
+					<script>$$('#footer').css("display",'none');</script>
+		</div>
+		$code:
+			last = "/search?name={}&page={}".format(name,page - 1)
+			next = "/search?name={}&page={}".format(name,page + 1)
+
+		$if count != 0:
+			<hr>
+			<p style="text-align: center;margin: 0px;">$page/$totalPage</p>
+
+			<hr>
+
+			<div id="num">
+				$for i in range(totalPage):
+					$code:
+						url = "/search?name={}&page={}".format(name,i+1)
+						page1 = i + 1
+						color = 'color:skyblue;'
+						if page1 == page:
+							color = 'color:blue;'
+					<a href="$url"><span class="page" style="$color">$page1</span></a>
+			</div>
+
+			<hr>
+
+			<div id="" style="text-align: center;height: 30px;">
+				<a href="javascript:turn(1,$count,$page,'main')" style="margin-right: 30px;">上一页</a>
+				<span onclick="add();">+</span>
+				<a href="javascript:turn(2,$count,$page,'main')" style="margin-left: 30px;">下一页</a>
+			</div>
+
+
+
+		<script>
+			function turn(tag){
+				if(tag == 1){
+					//上一页
+					if (page <= 1){
+						mui.toast('这是第一页！', {
+							duration: 'short',
+							type: 'div'
+						});
+					}
+					else{
+						window.location.href = "$last";
+					}
+				}
+				else{
+					//下一页
+					if (page >= totalPage){
+						mui.toast('这是最后一页！', {
+							duration: 'short',
+							type: 'div'
+						});
+					}
+					else{
+						window.location.href = "$next";
+					}
+				}
+			}
+
+			$$("#num").scrollLeft($$($$('.page')[$page]).offset().left - window.screen.availWidth*0.5 - 20);
+
+		</script>
+
+
+	</body>
+</html>

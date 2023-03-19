@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="/static/js/mui.min.js"></script>
+		<link href="/static/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="/static/css/table.css" />
+		<script src="/static/js/jquery-3.4.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/menu.css" />
+		<style type="text/css">
+
+
+
+
+			body{
+				width: 400px!important;
+				margin: auto;
+				display: block;
+				border: 1px solid black;
+			}
+
+			/*点击变蓝色高亮*/
+			.mui-table-view-cell.mui-active {
+				background-color: #55aaff;
+			}
+
+			#jindu {
+				transform: translate(-15px, 11px);
+				width: 140%;
+				height: 4px;
+			}
+
+			.choose {
+				width: 15px;
+				transform: translate(30px, 12px);
+
+			}
+
+			#choosemenu {
+				text-align: center;
+				width: 100%;
+				height: 200px;
+				/* background-color: rgba(10, 10, 10, 0.8); */
+				position: absolute;
+				top: 100%;
+				border-top: 1px solid #f9f9f9;
+				box-shadow: 0px -2px 3px #bdbdbd;
+				background: url(./static/pic/background.jpeg) center;
+				background-size: cover;
+				border-radius: 20px;
+				margin: 0;
+				z-index: 10;
+			}
+
+			.goup {
+				animation: goup 0.5s;
+				animation-fill-mode: forwards;
+			}
+
+			.godown {
+				animation: godown 0.5s;
+				animation-fill-mode: forwards;
+			}
+
+			@keyframes goup {
+				from {
+					transform: translateY(0px);
+				}
+
+				to {
+					transform: translateY(-170px);
+				}
+			}
+
+			@keyframes godown {
+				from {
+					transform: translateY(-170px);
+				}
+
+				to {
+					transform: translateY(0px);
+				}
+			}
+		</style>
+
+		
+	</head>
+	<body>
+		
+
+		<div class="mui-off-canvas-wrap mui-draggable">
+			<!-- 菜单容器 -->
+
+			<aside class="mui-off-canvas-left">
+
+				<div class="mui-scroll-wrapper" id="left">
+
+					<div class="mui-scroll">
+						<!-- 此区域显示左侧菜单内容 -->
+
+						<img src="/static/pic/head.jpg" id="head">
+						<h4 id='xh' class="mui-text-center">2017011295</h4>
+						<br>
+						<ul class="mui-table-view" style="background-color: rgba(0,0,0,0);">
+
+							<br>
+
+							<li id="refresh" class="mui-table-view-cell mui-text-center options" data-loading-text="刷新中">
+								刷新服务器数据
+								<!-- 进度条 -->
+								<div id="jindu" class="mui-progressbar mui-progressbar-infinite mui-hidden">
+									<span></span>
+								</div>
+							</li>
+							<span class="fill"></span>
+							<li id="logout" class="mui-table-view-cell mui-text-center options">
+								注销
+							</li>
+
+							<br>
+							<li id="feedback" class="mui-table-view-cell mui-text-center options">
+								关于 && 反馈
+							</li>
+
+							<br>
+						</ul>
+
+						<span id="copyright">@CopyRight: ChenShiMei <br> Version beta 0.6</span>
+
+						<!-- 尾 -->
+					</div>
+
+				</div>
+			</aside>
+			<!-- 主页面容器 -->
+			<div class="mui-inner-wrap">
+				
+				<!-- <div class="top show"></div> -->
+				<!-- 主页面标题 -->
+				<header class="mui-bar mui-bar-nav show" style="background-color: white;">
+					<div id="" style="text-align: center;">
+						<a id='little' class="mui-icon mui-icon-forward icon-turn" style="float: left;"></a>
+						<span id="num" class="choose" style="position: absolute;left: 50%;right: 50%;width: 100px;transform: translate(-50%,50%);">第几周</span>
+						<img class="choose" id='choose' src="/static/pic/down.png">
+					</div>
+				</header>
+				
+				<div class="mui-content mui-scroll-wrapper">
+					<!-- 这里显示正常的内容 头-->
+					<div id="header" class="show">
+						<table id='days'>
+							<!-- 这里是星期和日期 -->
+						</table>
+					</div>
+
+					<!-- 尾 -->
+					<div class="mui-scroll-wrapper scroll">
+
+						<div class="mui-scroll">
+							<!-- 这里显示局部滑动中的内容 -->
+
+							<table id='table' style="background: white;">
+
+							</table>
+
+							<!-- 尾 -->
+						</div>
+					</div>
+
+					<!-- 底部周选择标签 -->
+					<div id="choosemenu" status='close'>
+						<br>
+						<div class="mui-numbox" style="display: block;margin: auto;margin-top: 5px;" data-numbox-step='1' data-numbox-min='0'
+						 data-numbox-max='20'>
+							<button class="mui-btn mui-numbox-btn-minus change" type="button">-</button>
+							<input class="mui-numbox-input" disabled="disabled" type="number" />
+							<button class="mui-btn mui-numbox-btn-plus change" type="button">+</button>
+						</div>
+						<!-- 确认按钮 -->
+						<button id='back' type="button" class="mui-btn mui-btn-danger " style="display: block;margin: auto;margin-top: 10px;">返回当前周</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+
+		<script src="/static//js/app.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+
+			});
+			$$(document).ready(function() {
+
+				//初始化各种高度
+				function init() {
+					//设计顶部填充span高
+					var barHeight = 0
+					var topHeight = barHeight;
+					var headerHeight = $$('.mui-bar').height()
+					var headHeight = +barHeight;
+					var a = 10;
+					var scrollTop = headerHeight + headHeight + a;
+					var scrollHeight = window.screen.height - headHeight - headerHeight - barHeight - a;
+					//顶部高度填充
+					$$('body').css("transform", "translateY(" + (topHeight - 5) + "px" + ")");
+			
+					//滑动top填充
+					$$('.scroll').css("top", scrollTop + "px");
+					$$('.scroll').css("height", scrollHeight + "px");
+					
+					//初始化池塘文字
+					$$('.wuxiu').text("午休"); 
+					
+					
+				}
+				
+				//刷新显示
+				
+				var data = getData();
+				
+
+				try{
+					console.log(data.data.name);
+					output("#xh", data.data.name);
+					fresh(getWeek());
+					init();
+				}
+				catch(e){
+					window.location.href = "./login";
+				}
+
+
+				goup = function() {
+					//展开
+					$$("input").trigger("blur");
+					$$("#choosemenu").attr("status", "open");
+					$$("#choosemenu").attr("class", "goup");
+					$$("#choose").attr("src", "/static/pic/up.png");
+				};
+
+				godown = function() {
+					//收起
+					$$("input").trigger("blur"); 
+					$$("#choosemenu").attr("status", "close");
+					$$("#choosemenu").attr("class", "godown");
+					$$("#choose").attr("src", "/static/pic/down.png");
+				};
+
+				//点击列表首期周选择框
+				mui('body').on('tap', 'table', function() {
+					if ($$("#choosemenu").attr("status") == "open") godown();
+				});
+
+				//显示周选择界面
+				mui('body').on('tap', '.choose', function(e) {
+					if ($$("#choosemenu").attr("status") == "close") goup();
+					else godown();
+				});
+
+				//反馈按钮点击事件
+				mui('body').on('tap', '#feedback', function(e) {
+					// mui.openWindow({
+					// 	url: 'feedback.html',
+					// 	id: 'feedback'
+					// });
+					//mui.alert(data.username);
+					window.location.href = "./fb"
+				});
+
+				//更改周
+				mui('body').on('tap', '.change', function(e) {
+					var num = mui('.mui-numbox').numbox().getValue();
+					fresh(num);
+				});
+
+				//返回当前周
+				mui('body').on('tap', '#back', function(e) {
+					fresh(getWeek());
+				});
+
+				//点击显示教师 课程点击事件
+				mui('body').on('tap', '.course', function(e) {
+					string = this.innerText + "\n";
+					string += "任课教师：" + this.getAttribute("teacher") + "\n";
+					string += "课程类型：" + this.getAttribute("kind") + "\n";
+					string += "上课周：" + this.getAttribute("week");
+					mui.alert(string, "详细信息", "确定", null, 'div');
+
+				});
+
+				//刷新服务器数据事件
+				mui('body').on('tap', '#refresh', function(e) {
+					var btnArray = ['返回', '刷新'];
+					mui.confirm('请勿重复刷新。\n刷新失败后等几秒钟重试。', '刷新', btnArray, function(e) {
+						if (e.index == 1) {
+							//setData();
+							document.getElementById('jindu').classList.remove('mui-hidden');
+							mui.toast("开始刷新");
+							setTimeout(function() {
+								getTable(null, null, function(e) {
+
+									mui.toast(e);
+									if (e == '数据请求成功！') {
+										fresh();
+									}
+									document.getElementById('jindu').classList.add('mui-hidden');
+								});
+							}.bind(this), 100);
+						}
+					}, 'div')
+				});
+
+
+				//点击显示左侧菜单
+				mui("body").on("tap", "#little", function() {
+					mui('.mui-off-canvas-wrap').offCanvas().toggle();
+
+				});
+
+
+				//注销事件
+				mui('body').on('tap', '#logout', function(e) {
+					var btnArray = ['手滑', '注销'];
+					mui.confirm('确定吗？', '注销', btnArray, function(e) {
+						if (e.index == 1) {
+							localStorage.setItem('$$head', "");
+							setData();
+							mui.toast("退出登录");
+							localStorage.setItem('$$autolog', '0');
+							window.location.href = "./login"
+						}
+					}, 'div')
+
+				});
+
+				//更换头像事件
+				url = localStorage.getItem('$$head');
+				if (url) {
+					document.getElementById("head").setAttribute("src", url.replace("\"", "").replace("\"", "").replace("\"", "").replace(
+						"\"", "").replace("\"", ""));
+				} else {
+					document.getElementById("head").setAttribute("src", "./static/pic/head.jpg");
+				}
+				mui("body").on("tap", "#head", function() {
+					var btnArray = ['取消', '确定'];
+					mui.prompt('任意图片url。\n因为每次启动都会加载一次，所以注意头像文件大小。\n为空则使用默认头像', '图片URL', '更改头像', btnArray, function(e) {
+						if (e.index == 1) {
+							//确定
+							localStorage.setItem('$$head', JSON.stringify(e.value));
+							if (e.value) {
+								//不为空
+								document.getElementById("head").setAttribute("src", e.value);
+							} else {
+								//we为空
+								document.getElementById("head").setAttribute("src", "./static/pic/head.jpg");
+							}
+
+						} else {
+							//取消
+						}
+					}, "div")
+				});
+
+				//初始化局部滚动
+				mui('.mui-scroll-wrapper').scroll({
+					scrollY: true, //是否竖向滚动
+					scrollX: false,
+					deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+				});
+
+				//小箭头点击事件
+
+				document.querySelector('.mui-off-canvas-wrap').addEventListener('shown', function(event) {
+					//显示了左侧菜单
+
+					document.getElementById('little').classList.remove('mui-icon-forward');
+					document.getElementById('little').classList.add('mui-icon-back');
+					if ($$("#choosemenu").attr("status") == "open") godown();
+				})
+				document.querySelector('.mui-off-canvas-wrap').addEventListener('hidden', function(event) {
+
+					document.getElementById('little').classList.remove('mui-icon-back');
+					document.getElementById('little').classList.add('mui-icon-forward');
+					if ($$("#choosemenu").attr("status") == "open") godown();
+
+				})
+
+
+				var backButtonPress = 0;
+				mui.back = function(event) {
+					backButtonPress++;
+					if (backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						plus.nativeUI.toast('再按/滑一次退出');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 1000);
+					return false;
+				};
+
+			});
+		</script>
+
+	</body>
+</html>

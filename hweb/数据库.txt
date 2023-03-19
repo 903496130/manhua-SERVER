@@ -1,0 +1,11 @@
+create table list(
+    id int primary key,
+    name varchar(200) not null,
+    cover varchar(1000) not null
+)
+
+create table url(
+    id int not null,
+    num int not null,
+    url varchar(1000) not null
+)

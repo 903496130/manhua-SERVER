@@ -1,0 +1,172 @@
+$def with(mhid)
+$code:
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+	sql = 'select name,author,status,type,create_date,update_date,members,jianjie from list where mhid={};'.format(mhid)
+	ch.execute(sql)
+	i = ch.fetchone()
+	if i == None:
+		#参数错误 返回404
+		return 'error'
+	name = i[0]
+	author = i[1]
+	status = i[2]
+	type = i[3]
+	create_date = i[4]
+	update_date = i[5]
+	members = i[6]
+	jianjie = i[7]
+
+<title>叶灵漫画 - $name 在线观看</title>
+<script>
+	var path = '<span>\>当前位置：</span><a href="/">首页</a>&nbsp;&nbsp;<a href="/$mhid">$name</a>&nbsp;&nbsp'
+</script>
+<link rel="stylesheet" href="/static/pc/css/table.css">
+<div id="main">
+	<div id="left_content" class="card">
+		<span class="hello">
+			<span class="hello_content">
+				<h5>猜你喜欢</h5>
+			</span>
+			<span class="hello_short">
+				<em><small>Recommended</small></em>
+			</span>
+		</span>
+		$code:
+			sql = "select mhid,name,author,members from list where type='{}' order by rand() limit 8;".format(type)
+			ch.execute(sql)
+		$for i in ch:
+			<a href="/$i[0]">
+				<div class="small-cover">
+					<img class='small-cover-img' src="/static/cover/$(i[0]).jpg">
+					<div class="small-cover-right">
+						<span class="small-cover-name"><strong style="overflow: hidden;">$i[1]</strong></span>
+						<small>类型：$type</small><br>
+						<small>作者：$i[2][0:5]</small><br>
+						<small>共$i[3]话</small>
+					</div>
+				</div>
+			</a>
+
+
+	</div>
+
+	<div id="right_content">
+		<div id="info" class="card">
+			<div id="info-img">
+				<img src="/static/cover/$(mhid).jpg">
+			</div>
+
+			<div id="info-text">
+				<div id="info-name">$name</div>
+				<div class="info-text-child">作者：$author</div>
+				<div class="info-text-child">状态：$status</div>
+				<div class="info-text-child">总章节数：$members</div>
+				<div class="info-text-child">类型：$type</div>
+				<div class="info-text-child">上架日期：$create_date</div>
+				<div class="info-text-child">更新日期：$update_date</div>
+			</div>
+			<div id="statement">
+				<span class="hello">
+					<span class="hello_content">
+						<h5>声明</h5>
+					</span>
+					<span class="hello_short">
+						<em><small>Statement</small></em>
+					</span>
+				</span>
+				<div class="info-text-child">1.本漫画内容来自网络或用户上传，如果对侵犯了您的权力，请联系站长删除资源。</div>
+				<div class="info-text-child">2.本站禁止任何违规资源。如发现资源内容违规，请点击举报按钮，管理员会在核实后删除资源。</div>
+				<div class="info-text-child">3.禁止在评论区发布广告，色情，反动等内容，违者封号处理。</div>
+			</div>
+
+		</div>
+
+		<div id="intro" class="card">
+			<span class="hello">
+				<span class="hello_content">
+					<h5>漫画简介</h5>
+				</span>
+				<span class="hello_short">
+					<em><small>Comic book introduction</small></em>
+				</span>
+			</span>
+			<div id="intro-text">
+				$jianjie
+			</div>
+
+		</div>
+
+		<div id="chapter" class="card">
+			<span class="hello">
+				<span class="hello_content">
+				<h5>漫画章节 <a href="javascript:change();" id='shoter'>展开</a></h5>
+				</span>
+				<span class="hello_short">
+					<em><small>Comic Chapters</small></em>
+				</span>
+			</span>
+
+			<div id="chapter-content" style="max-height: 200px;">
+				$code:
+					sql = 'select zjid,name from chapter where mhid={};'.format(mhid);
+					ch.execute(sql)
+				$for i in ch:
+					<div class="chapter-content-node">
+						<a href="/$(mhid)/$(i[0])">$i[1]</a>
+					</div>
+
+
+
+			</div>
+		</div>
+		<div id="comments" class="card">
+			<span class="hello">
+				<span class="hello_content">
+					<h5>用户评论</h5>
+				</span>
+				<span class="hello_short">
+					<em><small>User comments</small></em>
+				</span>
+			</span>
+
+			<div id="comments-content">
+				<div class="comments">
+					<div class="comments-info">
+						<a class="comments-tx">
+							<img style="height: 100%;" src="/static/pic/tx.jpg">
+						</a>
+						<div class="comments-user-info">
+							<span class='comments-username'>
+								<strong>孙悟空是我儿子</strong>
+							</span>
+							<span class='comments-date'>
+								<small>2017-10-23 25:23:21</small>
+							</span>
+						</div>
+					</div>
+					<div class="comments-content-text">
+						您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！您真牛逼啊！牛逼得不得了！
+					</div>
+				</div>
+			</div>
+
+			<div id="page-choose">
+				<a class="btn btn-default" href="#" role="button">上一页</a>
+				<a class="btn btn-default" href="#" role="button">1</a>
+				<a class="btn btn-default" href="#" role="button">2</a>
+				…
+				<a class="btn btn-default" href="#" role="button">3</a>
+				<a class="btn btn-default" href="#" role="button">4</a>
+				<a class="btn btn-default" href="#" role="button">下一页</a>
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+</div>
+$code:
+	db.close()

@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'sans';
+    src: url("./source/fonts/sans.otf");
+}
+
+
+body {
+    background-color: rgb(247, 247, 247);
+}
+
+#header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2px;
+    border-bottom: 1px solid black;
+}
+
+
+#logo {
+    width: 3rem;
+    margin-right: 10px;
+    border: $color 1px solid;
+    border-radius: 1000px;
+    transform: translateX(-20px);
+}
+
+#input {
+    display: flex;
+    transform: translateX(-20px);
+    border: rgb(232, 232, 232) solid 3px;
+    border-radius: 10px;
+    width: 60%;
+    background-color: white;
+    height: 2.5rem;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#keyword {
+    width: 100%;
+    height: 80%;
+    border: 0;
+    outline: none;
+    margin-left: 10px;
+    font-size: 1.1rem;
+    font-family: "sans";
+    text-align: center;
+}
+
+#search {
+    height: 80%;
+    margin-right: 5px;
+}
+
+#search:hover {
+    content: url(./source/pic/search_2.png);
+}
+
+#tips {
+    position: absolute;
+    background-color: white;
+    border: rgb(232, 232, 232) solid 3px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: none;
+    z-index: 10;
+}
+
+
+.tip{
+    display: block;
+    width: 100%;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 1rem;
+}
+
+.tip:hover{
+    background-color: #e6dede;
+}
+
+#content{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.mui-card{
+    display: inline-block;
+    width: 11.5rem;
+    height: 15.65rem;
+    margin: 3px;
+    background-size: 100% 100%;
+    background-image: url(/source/pic/loading.gif);
+}
+
+@media screen and (max-width: 570px) {
+    .mui-card {
+        width: 45%;
+    }
+}
+
+
+.name{
+    display: flex;
+    height:60px;
+    font-size: 13px;
+    font-weight: 540;
+    text-align: center;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    justify-content: center;
+    align-items: center;
+    color: #ffbf1c;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 1));
+
+}
+.name::-webkit-scrollbar {/*隐藏滚轮*/
+    display: none;
+}
+
+#footer{
+    background-color: rgba(0, 0, 0, 0.8);
+    color:white;
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    transform: translateY(-100%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.choose{
+    color:white;
+}
+
+hr{
+
+}

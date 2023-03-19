@@ -1,0 +1,47 @@
+$def with(list)
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+		<script>
+			$$(window).ready(function(){
+				arr = $$('.pic')
+				for(i = 0;i < arr.length;i++){
+					url = arr[i].getAttribute("url");
+					var img = new Image();
+					img.setAttribute("num",i);
+					img.onload = function(){
+							arr[this.getAttribute('num')].setAttribute('src',this.src);
+					}
+					img.onerror = function() {
+							arr[this.getAttribute('num')].setAttribute('src','/static/pic/error.jpg');
+					}
+					img.src = url;
+				}
+	
+			});
+	
+		</script>
+	<body>
+	
+		<div class="head">
+			<a href="/"><首页</a> 
+			随机推荐 - 图片
+		</div>
+		<div class="head2">
+			
+		</div>
+		 <button type="button" class="refresh">刷新</button>
+
+		 <div class="pic-content">
+			$for i in list:
+				<img class="pic" src="/static/pic/loading.gif" url="$i[0]">
+		</div>
+		<a href=""><button type="button" class="refresh">刷新</button></a>
+
+	</body>
+</html>

@@ -1,0 +1,263 @@
+$def with(type,order,how,page)
+$code:
+	num = 18
+	db = mc.connect(host = 'localhost',user = 'root',passwd = 'wodemima',database = 'manhua')
+	ch = db.cursor()
+
+	if type == '全部':
+		sql = 'select SQL_CALC_FOUND_ROWS mhid,name,status,members from list where position=0 order by {} {} limit {},{}'.format(order,how,(page-1) * num,num)
+	else:
+		sql = 'select SQL_CALC_FOUND_ROWS mhid,name,status,members from list where position=0 and type="{}" order by {} {} limit {},{}'.format(type,order,how,(page-1) * num,num)
+	ch.execute(sql)
+	result = ch.fetchall()
+	ch.execute('SELECT FOUND_ROWS();')
+	count = ch.fetchone()[0]
+	if count // num == 0:
+		count = count // num
+	else:
+		count = count // num + 1
+
+	if page > count:
+		return 'None'
+
+
+<title>$type 类型漫画 第$(page)页 - 叶灵漫画</title>
+<script>
+	var path = ' >分类'
+</script>
+<link rel="stylesheet" type="text/css" href="/static/pc/css/type.css" />
+<div id="main">
+	<div id="left_content">
+		<div id="update" class="card">
+			<span class="hello">
+				<span class="hello_content">
+					<h5>最近更新</h5>
+				</span>
+				<span class="hello_short">
+					<em><small>Recent updates</small></em>
+				</span>
+			</span>
+
+			<div class='scroll scroll-bar'>
+				$code:
+					if type != '全部':
+						sql = "select mhid,name,author,members,update_date from list where type='{}' and position=0 order by update_date limit 8;".format(type)
+					else:
+						sql = "select mhid,name,author,members,update_date from list where position=0 order by update_date desc limit 8;"
+					ch.execute(sql)
+				$for i in ch:
+					<a href="/$i[0]">
+						<div class="small-cover">
+							<img class='small-cover-img' src="/static/cover/$(i[0]).jpg">
+							<div class="small-cover-right">
+								<span class="small-cover-name"><strong style="overflow: hidden;">$i[1]</strong></span>
+								<small>类型：$type</small><br>
+								<small>作者：$i[2][0:5]</small><br>
+								<small>$i[3]话-$i[4][0:10]</small>
+							</div>
+						</div>
+					</a>
+			</div>
+		</div>
+
+		<div id="recommend" class="card">
+			<span class="hello">
+				<span class="hello_content">
+					<h5>猜你喜欢</h5>
+				</span>
+				<span class="hello_short">
+					<em><small>Recent updates</small></em>
+				</span>
+			</span>
+
+			<div class='scroll scroll-bar'>
+				$code:
+					if type != '全部':
+						sql = "select mhid,name,author,members,status from list where type='{}'  order by rand() limit 8;".format(type)
+					else:
+						sql = "select mhid,name,author,members,status from list order by rand() desc limit 8;"
+					ch.execute(sql)
+				$for i in ch:
+					<a href="/$i[0]">
+						<div class="small-cover">
+							<img class='small-cover-img' src="/static/cover/$(i[0]).jpg">
+							<div class="small-cover-right">
+								<span class="small-cover-name"><strong style="overflow: hidden;">$i[1]</strong></span>
+								<small>类型：$type</small><br>
+								<small>作者：$i[2][0:5]</small><br>
+								<small>$i[4]-共$i[3]话</small>
+							</div>
+						</div>
+					</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="center_content" class="card">
+		<span class="hello">
+			<span class="hello_content">
+				<h5>最近更新</h5>
+			</span>
+			<span class="hello_short">
+				<em><small>Recent updates</small></em>
+			</span>
+		</span>
+
+		<div id="type-choose">
+			<div class="type">
+				<span class="type-name">漫画分类：</span>
+				<div class="type-node-box">
+				$code:
+					list = ["全部","亲情","伪娘","侦探","冒险","剧情","厨艺","图片","小说","惊栗","搞笑","日文","校园","格斗","欧美","港漫","神鬼","科幻","竞技","经典","耽美","萌系","魔法"]
+				$for i in list:
+					$if i == type:
+						<a href="#"><span class="type-node type1" value='$i' style="color: orange;" value='$i'>$i</span></a>
+					$else:
+						<a href="#"><span class="type-node type1" value='$i'>$i</span></a>
+				</div>
+
+			</div>
+			<div class="type">
+				<span class="type-name">排列方式：</span>
+				<div class="type-node-box">
+				$code:
+					list = ['按章节数','按热门度','按更新顺序']
+					dic = {'按热门度':"hot",'按章节数':"members",'按更新顺序':"update_date"}
+				$for i in list
+					$if dic[i] == order:
+						<a href="#"><span class="type-node order" value='$dic[i]' style="color: orange;" value='$dic[i]'>$i</span></a>
+					$else:
+						<a href="#"><span class="type-node order" value='$dic[i]'>$i</span></a>
+				</div>
+			</div>
+
+			<div class="type">
+				<span class="type-name">排列顺序：</span>
+				<div class="type-node-box">
+				$code:
+					list = ['降序','升序']
+					dic = {'升序':"asc",'降序':"desc"}
+				$for i in list
+					$if dic[i] == how:
+						<a href="#"><span class="type-node how" value='$dic[i]' style="color: orange;" value='$dic[i]'>$i</span></a>
+					$else:
+						<a href="#"><span class="type-node how" value='$dic[i]'>$i</span></a>
+				</div>
+			</div>
+		</div>
+		<div id="page-show">
+			1/2
+		</div>
+
+		<div id="content">
+			$for i in result:
+				<a href="/$i[0]">
+					<div class="cover">
+						<img class="book-cover" src="/static/cover/$(i[0]).jpg">
+						<span class="book-status">$i[2] 共$i[3]话</span>
+						<span class="book-name">$i[1]</span>
+					</div>
+				</a>
+
+		</div>
+		<div id="page-choose">
+			$if page < 10:
+				<a class="btn btn-default" href="javascript:turn($(page-1))" role="button">上一页</a>
+				$for a in range(1,11):
+					<a class="btn btn-default" href="javascript:turn($a)" role="button">$a</a>
+				…
+				<a class="btn btn-default" href="javascript:turn($count)" role="button">$count</a>
+				<a class="btn btn-default" href="javascript:turn($(page+1))" role="button">下一页</a>
+
+			$elif page > count-10:
+				<a class="btn btn-default" href="javascript:turn($(page-1))" role="button">上一页</a>
+				<a class="btn btn-default" href="javascript:turn(1)" role="button">1</a>
+				…
+				$for a in range(count - 10,count):
+					<a class="btn btn-default" href="javascript:turn($a)" role="button">$a</a>
+
+				<a class="btn btn-default" href="javascript:turn($count)" role="button">$count</a>
+				<a class="btn btn-default" href="javascript:turn($(page+1))" role="button">下一页</a>
+
+			$else:
+				<a class="btn btn-default" href="javascript:turn($(page-1))" role="button">上一页</a>
+				<a class="btn btn-default" href="javascript:turn(1)" role="button">1</a>
+				…
+				$for a in range(page-2,page+3):
+					<a class="btn btn-default" href="javascript:turn($a)" role="button">$a</a>
+				…
+				<a class="btn btn-default" href="javascript:turn($count)" role="button">$count</a>
+				<a class="btn btn-default" href="javascript:turn($(page+1))" role="button">下一页</a>
+
+			<script>
+				function turn(page){
+					if(page > $count) alert("这已经是最后一页了！")
+					else if(page < 1) alert("这是第一页！")
+					else{
+						window.location.href ='/type?type=$type&order=$order&how=$how&page=' + page;
+					}
+
+				}
+				$$(".type1").click(function(){
+					window.location.href = '/type?type=' + $$(this).attr('value') + '&order=$order&how=$how';
+
+				});
+				$$(".order").click(function(){
+					window.location.href = '/type?type=$type&order=' + $$(this).attr('value') + '&how=$how';
+				});
+				$$(".how").click(function(){
+					window.location.href = '/type?type=$type&order=$order&how=' + $$(this).attr('value');
+				});
+			</script>
+		</div>
+
+		<div style="width: 100%;height: 153px;">
+			<span class="hello">
+				<span class="hello_content">
+					<h5>广告招租</h5>
+				</span>
+				<span class="hello_short">
+					<em><small>LLALALALALAL</small></em>
+				</span>
+			</span>
+		</div>
+
+
+
+	</div>
+
+	<div id="right_content" class="card">
+		<span class="hello">
+			<span class="hello_content">
+				<h5>分区热门</h5>
+			</span>
+			<span class="hello_short">
+				<em><small>Recent updates</small></em>
+			</span>
+		</span>
+		<div class='scroll scroll-bar' style="height: 96%;">
+		$code:
+			if type != '全部':
+				sql = "select mhid,name,author,members,status from list where type='{}' order by hot desc limit 20;".format(type)
+			else:
+				sql = "select mhid,name,author,members,status from list order by hot desc limit 20;"
+			ch.execute(sql)
+		$for i in ch:
+			<a href="/$i[0]">
+				<div class="small-cover">
+					<img class='small-cover-img' src="/static/cover/$(i[0]).jpg">
+					<div class="small-cover-right">
+						<span class="small-cover-name"><strong style="overflow: hidden;">$i[1]</strong></span>
+						<small>类型：$type</small><br>
+						<small>作者：$i[2][0:5]</small><br>
+						<small>$i[4]-共$i[3]话</small>
+					</div>
+				</div>
+			</a>
+		</div>
+
+	</div>
+
+</div>
+$code:
+	db.close()

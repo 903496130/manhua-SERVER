@@ -1,0 +1,141 @@
+* {
+	font-family: "微软雅黑";
+}
+
+body {
+	background-color: #fafafa;
+	padding: 0;
+	margin: 0;
+}
+
+.head {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	background-color: white;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0px 0px 0px 1px #ebebeb;
+	z-index: 10;
+}
+.head2{
+	height: 40px;
+}
+.head a{
+	position: absolute;
+	left: 5px;
+	text-decoration: none;
+	color: dodgerblue;
+}
+.refresh{
+	width: 97%;
+	padding: 0;
+	margin: 5px;
+	border: 0;
+	background-color: #007aff;
+	color: white;
+	height: 40px;
+	border-radius: 5px;
+}
+
+.content {
+	margin: 2px;
+	border: 2px solid #ebebeb;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	flex-wrap: wrap;
+}
+.content a{
+	width: 45%;
+	height: 200px;
+	margin: 5px;
+}
+
+.card {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border: 1px #e1e1e1 solid;
+	overflow: hidden;
+	transition: 1s;
+	background:center no-repeat;
+	background-size: 100% 100%;
+	opacity: 0;
+}
+.jump{
+	animation: name 1s;
+}
+
+.card .name {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 40px;
+	background-color: rgba(0, 0, 0, .8);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: white;
+
+}
+.pic-content img{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	margin-bottom: -30px;
+	border-top:2px solid black;
+}
+.page-choose{
+	margin: 2px;
+	border: 2px solid #ebebeb;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	flex-wrap: wrap;
+}
+.page-choose a{
+	text-decoration: none;
+}
+.page{
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	margin-left: 20px;
+	margin-right: 20px;
+	color: #007aff;
+}
+
+.rec{
+	width: 100%;
+	height: 60px;
+	display: flex;
+}
+.rec > a{
+	width: 50%;
+	text-decoration: none;
+	color: white;
+	padding: 5px;
+}
+.rec span{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 6px;
+	
+}
+
+@keyframes name{
+	0%{transform: scale(0);opacity: 0;}
+	50%{transform: scale(1.2);opacity: 1;}
+	100%{transform: scale(1);opacity: 1;}
+}

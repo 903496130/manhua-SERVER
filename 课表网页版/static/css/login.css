@@ -1,0 +1,212 @@
+body{
+	background-color: #fafafa;
+	background:url(../pic/background.jpeg) fixed center no-repeat;
+	background-size: 400px 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.xbody{
+	animation: gowhite 4s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes gowhite {
+	60%{
+		background-image: url(../pic/white.png);
+	}
+	100%{ 
+		background-image: url(../pic/white.png);
+	}
+}
+ 
+#pic {
+	display: block;
+	
+	margin: auto;
+	margin-top: 10%;
+	margin-bottom: 5%; 
+}
+
+#hello {
+	display: block;
+	text-align: center;
+	font-size: 15px;
+	font-weight: 500;
+	margin-bottom: 15px;
+
+}
+
+#main {
+	width: 90%;
+	margin: auto;
+	background-color: rgba(255, 170, 127,0);
+	padding-bottom: 20px;
+	
+}
+
+#login {
+	width: 95%;
+	display: block;
+	margin: auto;
+	margin-top: 30px;
+}
+
+#foot {
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	
+}
+
+.mui-input-row {
+	background: rgba(255, 170, 255, 0);
+	transition: background-color 0.5s, color 0.5s, border-radius 1s;
+}
+
+input.invalid::-webkit-input-placeholder {
+	transition: color 0.5s;
+	color: white;
+}
+
+.mui-input-row:hover,
+.mui-input-row:after,
+.mui-input-row::-webkit-input-placeholder:hover {
+	background-color: #007aff;
+	color: white;
+	border-radius: 20px;
+}
+
+hr {
+	visibility: visible;
+	color: #c8c7cc;
+	width: 88%;
+}
+
+
+.xbutton {
+	animation: gone 0.5s; 
+	animation-fill-mode: forwards;
+}
+
+
+.xys {
+	position: absolute;
+	right: 60%; 
+	transition: transform 2s;
+	transform: translate(-1000px,0px);
+}
+ 
+.xgw { 
+	position: absolute;
+	left: 60%; 
+	transition: transform 2s,visibility 2s; 
+	transform: translate(1000px,0px);
+	visibility: hidden;
+
+}
+
+.xshu{
+	left: 45%; 
+	position: absolute;
+	transition: transform 2s; 
+	transform: translate(0px,1000px);
+}
+
+.xusername{
+	animation: goleft 2s;
+	animation-fill-mode: forwards;
+}
+
+.xpassword{
+	animation: goright 2s;
+	animation-fill-mode: forwards;
+}
+
+.xpic{
+	animation: gobig 4s;
+	animation-fill-mode: forwards;
+}
+
+#newhello{
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	visibility: hidden;
+	width: 400px;
+	opacity: 0; 
+	height: 100%;
+	z-index: 100;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}
+
+
+.xnewhello{
+	animation: gostrong 5s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes gostrong {
+	0%{
+		visibility: hidden;
+		opacity:0;
+	}
+	70%{
+		visibility: visible;
+		font-size: 60px;
+		opacity:1;
+		
+	}
+	100%{
+		font-size: 60px;
+		opacity:0;
+	}
+}
+
+
+@keyframes gobig {
+
+	100%{
+		height: 30%;
+		opacity:0;
+	}
+}
+
+@keyframes gone {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes gotop {
+
+	to {
+		transform: translateY(-1000px);
+	}
+}
+
+@keyframes goleft {
+	from {}
+	to {
+		transform: translateX(-1000px);
+		
+	}
+}
+
+@keyframes goright {
+	from {}
+
+	to {
+		transform: translateX(1000px);
+		
+	}
+}

@@ -1,0 +1,56 @@
+#choose{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width:100%;
+	height: 40%;
+}
+
+#choose{
+
+}
+
+#mh {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: url('https://api.ixiaowai.cn/api/api.php') no-repeat center;
+	background-size: 100% 100%;
+	filter: blur(4px);
+	z-index: -1;
+	animation: mohu 3s;
+	transform: scale(1.1);
+}
+
+.center {
+	width: 100%;
+	height: 42%;
+	border-radius: 7%;
+	background-color: rgba(255, 255, 255, 0.7);
+	font-size: 19px;
+	color: white;
+	z-index: 20;
+}
+
+#mh99{
+	position: relative;
+	display: inline-block;
+	margin-right: 30px;
+	width: 390px;
+	height: 250px;
+	
+	background: url('../pic/manhua.jpg') center no-repeat;background-size: 100% 100%;
+	animation: goright 1s;
+}
+
+#r18{
+	display: inline-block;
+	position: relative;
+	margin-left: 30px;
+	width: 390px;
+	height: 250px;
+	background: url('../pic/r18.jpg') center no-repeat;background-size: 100% 100%;
+	animation: goleft 1s;
+}
